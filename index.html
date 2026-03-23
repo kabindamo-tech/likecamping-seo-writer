@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global AI SEO Forge · Enterprise Content Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --accent: #8b5cf6;
+            --surface: rgba(255, 255, 255, 0.98);
+            --dark-bg: #0a0a0f;
+            --card-bg: rgba(20, 20, 30, 0.8);
+        }
+        
+        * { box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+        }
+        
+        .glass-panel {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .input-field {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #818cf8;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            outline: none;
+        }
+        
+        .input-field::placeholder {
+            color: #64748b;
+        }
+        
+        .platform-select {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .platform-select:focus {
+            border-color: #818cf8;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+        
+        .platform-select option {
+            background: #1a1a2e;
+            color: #e2e8f0;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .generate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .generate-btn:hover:not(:disabled)::before {
+            left: 100%;
+        }
+        
+        .generate-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.4);
+        }
+        
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .settings-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .settings-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #818cf8;
+        }
+        
+        .editor-area {
+            font-family: 'SF Mono', 'Fira Code', Monaco, monospace;
+            line-height: 1.7;
+            font-size: 13px;
+            background: rgba(10, 10, 15, 0.8);
+            color: #e2e8f0;
+        }
+        
+        .preview-area {
+            background: #ffffff;
+            color: #1e293b;
+        }
+        
+        .preview-area h1 { 
+            font-size: 1.875rem; 
+            font-weight: 800; 
+            margin-bottom: 1.25rem; 
+            color: #0f172a; 
+            border-bottom: 3px solid #e2e8f0; 
+            padding-bottom: 0.75rem;
+            letter-spacing: -0.025em;
+        }
+        .preview-area h2 { 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            margin-top: 2rem; 
+            margin-bottom: 1rem; 
+            color: #1e293b;
+            letter-spacing: -0.025em;
+        }
+        .preview-area h3 { 
+            font-size: 1.25rem; 
+            font-weight: 600; 
+            margin-top: 1.5rem; 
+            margin-bottom: 0.75rem; 
+            color: #334155;
+        }
+        .preview-area p { 
+            margin-bottom: 1.25rem; 
+            line-height: 1.8; 
+            color: #334155;
+            font-size: 1rem;
+        }
+        .preview-area ul { 
+            list-style-type: disc; 
+            padding-left: 1.5rem; 
+            margin-bottom: 1.25rem; 
+        }
+        .preview-area ol { 
+            list-style-type: decimal; 
+            padding-left: 1.5rem; 
+            margin-bottom: 1.25rem; 
+        }
+        .preview-area li { 
+            margin-bottom: 0.5rem; 
+            color: #334155;
+            line-height: 1.7;
+        }
+        .preview-area strong { 
+            font-weight: 700; 
+            color: #0f172a;
+        }
+        .preview-area blockquote { 
+            border-left: 4px solid #6366f1; 
+            padding-left: 1.25rem; 
+            margin: 1.5rem 0; 
+            color: #475569; 
+            font-style: italic; 
+            background: #f8fafc; 
+            padding: 1rem 1.25rem; 
+            border-radius: 0 12px 12px 0;
+            font-size: 1.05rem;
+        }
+        .preview-area code { 
+            background: #f1f5f9; 
+            padding: 0.25rem 0.5rem; 
+            border-radius: 6px; 
+            font-family: monospace; 
+            font-size: 0.875em;
+            color: #6366f1;
+        }
+        .preview-area pre { 
+            background: #1e1b4b; 
+            color: #e2e8f0; 
+            padding: 1.25rem; 
+            border-radius: 12px; 
+            overflow-x: auto; 
+            margin: 1.25rem 0;
+            font-size: 0.875rem;
+        }
+        .preview-area pre code { 
+            background: transparent; 
+            padding: 0; 
+            color: #e2e8f0;
+        }
+        .preview-area table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+        .preview-area th, .preview-area td { 
+            border: 1px solid #e2e8f0; 
+            padding: 0.875rem 1rem; 
+            text-align: left; 
+        }
+        .preview-area th { 
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); 
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .preview-area tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        
+        .custom-scroll::-webkit-scrollbar { 
+            width: 8px; 
+        }
+        .custom-scroll::-webkit-scrollbar-track { 
+            background: rgba(255, 255, 255, 0.05); 
+            border-radius: 4px; 
+        }
+        .custom-scroll::-webkit-scrollbar-thumb { 
+            background: rgba(255, 255, 255, 0.2); 
+            border-radius: 4px; 
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { 
+            background: rgba(255, 255, 255, 0.3); 
+        }
+        
+        .modal {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .fade-in { 
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .typing-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite ease-in-out both;
+        }
+        
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.375rem 0.875rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .badge-aio {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+        
+        .close-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <header class="flex items-center justify-between mb-10">
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-white tracking-tight">Global AI SEO Forge</h1>
+                    <p class="text-sm text-slate-400">Enterprise Content Generation Engine</p>
+                </div>
+            </div>
+            
+            <!-- Settings Button -->
+            <button id="settingsBtn" class="settings-btn p-3 rounded-xl" title="API Configuration">
+                <svg class="w-6 h-6 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Hero Section -->
+        <div class="text-center mb-10">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-4">
+                <span class="gradient-text">AI-Powered Content</span> for Global Commerce
+            </h2>
+            <p class="text-lg text-slate-400 max-w-2xl mx-auto">
+                Generate platform-optimized, GEO-compliant content that ranks. 
+                Built for Amazon A10, Shopify AIO, and Etsy search algorithms.
+            </p>
+            <div class="flex items-center justify-center gap-3 mt-6">
+                <span class="badge badge-aio">AIO Optimized</span>
+                <span class="badge" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3);">A10 Algorithm</span>
+                <span class="badge" style="background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3);">KE Integration</span>
+            </div>
+        </div>
+
+        <!-- Main Input Panel -->
+        <div class="glass-panel rounded-2xl p-8 mb-8">
+            <!-- Platform Target -->
+            <div class="mb-6">
+                <label class="block text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">
+                    Platform Target
+                </label>
+                <select id="platformSelect" class="platform-select w-full px-5 py-4 rounded-xl text-base">
+                    <option value="shopify">Shopify Blog (AIO Focused)</option>
+                    <option value="amazon" selected>Amazon Listing (A10 Algorithm)</option>
+                    <option value="etsy">Etsy Product Story (Emotional Branding)</option>
+                </select>
+            </div>
+
+            <!-- Primary Keyword -->
+            <div class="mb-6">
+                <label class="block text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">
+                    Primary Keyword
+                </label>
+                <input 
+                    type="text" 
+                    id="keywordInput" 
+                    placeholder="e.g., waterproof camping tent, organic cotton bedding"
+                    class="input-field w-full px-5 py-4 rounded-xl text-base"
+                >
+                <p class="text-sm text-slate-500 mt-2">Enter your main target keyword for SEO optimization.</p>
+            </div>
+
+            <!-- KE Keywords (Long-tail) -->
+            <div class="mb-6">
+                <label class="block text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">
+                    KE Long-tail Keywords (Optional)
+                </label>
+                <textarea 
+                    id="keKeywordsInput" 
+                    placeholder="Paste your Keywords Everywhere long-tail keywords here...&#10;e.g., best waterproof tent for family camping, lightweight backpacking tent 2 person, 4 season camping tent with stove jack"
+                    class="input-field w-full px-5 py-4 rounded-xl text-base h-24 resize-none"
+                ></textarea>
+                <p class="text-sm text-slate-500 mt-2">AI will strategically distribute these throughout the content for maximum SEO weight.</p>
+            </div>
+
+            <!-- Two Column Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <!-- Product Category -->
+                <div>
+                    <label class="block text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">
+                        Product Category
+                    </label>
+                    <select id="categorySelect" class="platform-select w-full px-5 py-4 rounded-xl text-base">
+                        <option value="">Select Category...</option>
+                        <option value="home-decor">Home Decor & Patio Furniture</option>
+                        <option value="camping-outdoor">Camping & Outdoor Gear</option>
+                        <option value="kitchen-dining">Kitchen & Dining</option>
+                        <option value="bedding-bath">Bedding & Bath</option>
+                        <option value="electronics">Electronics & Gadgets</option>
+                        <option value="fashion-accessories">Fashion & Accessories</option>
+                        <option value="sports-fitness">Sports & Fitness</option>
+                        <option value="pet-supplies">Pet Supplies</option>
+                    </select>
+                </div>
+
+                <!-- Content Length -->
+                <div>
+                    <label class="block text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">
+                        Content Length
+                    </label>
+                    <select id="lengthSelect" class="platform-select w-full px-5 py-4 rounded-xl text-base">
+                        <option value="concise">Concise (500-800 words)</option>
+                        <option value="standard" selected>Standard (1000-1500 words)</option>
+                        <option value="comprehensive">Comprehensive (2000-3000 words)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Key Selling Points -->
+            <div class="mb-8">
+                <label class="block text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">
+                    Key Selling Points (One per line)
+                </label>
+                <textarea 
+                    id="sellingPointsInput" 
+                    placeholder="Waterproof rating IPX6&#10;Sets up in 60 seconds&#10;Fits 4 adults comfortably&#10;Includes carrying bag and stakes"
+                    class="input-field w-full px-5 py-4 rounded-xl text-base h-28 resize-none"
+                ></textarea>
+                <p class="text-sm text-slate-500 mt-2">AI will weave these features into benefit-driven copy.</p>
+            </div>
+
+            <!-- Generate Button -->
+            <button id="generateBtn" class="generate-btn w-full text-white font-bold py-5 rounded-xl shadow-xl flex items-center justify-center space-x-3 text-lg">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+                <span>Generate Optimized Content</span>
+            </button>
+        </div>
+
+        <!-- Output Section -->
+        <div id="outputSection" class="hidden">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-bold text-white">Generated Output</h3>
+                <div class="flex items-center gap-2">
+                    <span class="text-sm text-slate-400">Powered by</span>
+                    <span class="badge" style="background: rgba(99, 102, 241, 0.2); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3);">Llama 3.1 70B</span>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Source Panel -->
+                <div class="glass-panel rounded-2xl overflow-hidden">
+                    <div class="bg-slate-800/50 px-5 py-4 border-b border-slate-700 flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                            </svg>
+                            <span class="font-bold text-slate-200">Markdown Source</span>
+                        </div>
+                        <span class="text-xs font-medium text-slate-500 uppercase tracking-wide">Editable</span>
+                    </div>
+                    <textarea 
+                        id="sourceEditor" 
+                        class="editor-area w-full h-[500px] p-5 border-0 resize-none focus:ring-0 custom-scroll"
+                        placeholder="Your optimized content will appear here..."
+                    ></textarea>
+                </div>
+
+                <!-- Preview Panel -->
+                <div class="glass-panel rounded-2xl overflow-hidden">
+                    <div class="bg-slate-800/50 px-5 py-4 border-b border-slate-700 flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                            <span class="font-bold text-slate-200">Live Preview</span>
+                        </div>
+                        <span class="text-xs font-medium text-slate-500 uppercase tracking-wide">Rendered</span>
+                    </div>
+                    <div id="previewPanel" class="preview-area h-[500px] p-6 overflow-y-auto custom-scroll">
+                        <div class="text-center text-slate-400 py-20">
+                            <p>Preview will render here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                <button id="copyBtn" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 border border-slate-700">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                    </svg>
+                    <span>Copy Markdown</span>
+                </button>
+                <button id="copyHtmlBtn" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 border border-slate-700">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <span>Copy as HTML</span>
+                </button>
+                <button id="regenerateBtn" class="flex-1 generate-btn text-white font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                    <span>Regenerate</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center mt-16 text-slate-500 text-sm">
+            <p class="font-medium">Global AI SEO Forge · Enterprise Content Solutions</p>
+            <p class="mt-2 opacity-70">Optimized for Amazon A10, Shopify AIO, and Etsy Search</p>
+        </footer>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal fixed inset-0 z-50 hidden items-center justify-center p-4">
+        <div class="modal-content rounded-2xl p-8 max-w-md w-full shadow-2xl">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-bold text-white">API Configuration</h3>
+                <button id="closeModal" class="close-btn p-2 rounded-lg">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-2">Groq API Key</label>
+                    <input 
+                        type="password" 
+                        id="apiKeyInput" 
+                        placeholder="gsk_..."
+                        class="input-field w-full px-4 py-3 rounded-lg text-sm"
+                    >
+                    <p class="text-xs text-slate-500 mt-2">Your API key is stored locally in your browser.</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-2">Model Selection</label>
+                    <select id="modelSelect" class="platform-select w-full px-4 py-3 rounded-lg text-sm">
+                        <option value="llama-3.1-70b-versatile" selected>Llama 3.1 70B (Recommended)</option>
+                        <option value="llama3-70b-8192">Llama 3 70B</option>
+                        <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
+                        <option value="gemma-7b-it">Gemma 7B</option>
+                    </select>
+                </div>
+                
+                <button id="saveSettings" class="w-full generate-btn text-white font-bold py-3 rounded-lg mt-4">
+                    Save Configuration
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-6 right-6 transform translate-x-full transition-transform duration-300 z-50">
+        <div class="bg-slate-900 border border-slate-700 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3">
+            <svg id="toastIcon" class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <span id="toastMessage" class="font-medium">Success</span>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // Configuration & State
+        // ============================================
+        const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+        
+        // Load from localStorage
+        let config = {
+            apiKey: localStorage.getItem('groq_api_key') || '',
+            model: localStorage.getItem('groq_model') || 'llama-3.1-70b-versatile'
+        };
+
+        // ============================================
+        // AIO-Optimized System Prompt (2026 Standard)
+        // ============================================
+        const SYSTEM_PROMPT = `You are an elite AI Optimization (AIO) specialist and enterprise SEO copywriter with deep expertise in Amazon A10, Shopify AIO, and Etsy search algorithms. You create content that ranks #1 and converts visitors into buyers.
+
+## 2026 AIO ALGORITHM REQUIREMENTS:
+
+### 1. AI OVERVIEW OPTIMIZATION (Critical)
+- First paragraph MUST answer the user's search intent directly
+- Use "According to [authority]" or "Based on [research]" within first 2 sentences
+- Lead with the conclusion, support with evidence
+- Structure: Answer → Evidence → Explanation
+
+### 2. KEYWORD EVERYWHERE (KE) INTEGRATION
+- Strategically distribute provided long-tail keywords throughout content
+- Primary keyword: 1.5-2.5% density (natural placement)
+- Long-tail keywords: 0.5-1% density each
+- LSI keywords: Semantic variations in H2/H3 headings
+- Place high-value keywords in: H1, first 100 words, H2 headings, conclusion
+
+### 3. EXPERT AUTHORITY SIGNALS
+- Reference industry standards (ASTM, ISO, IPX ratings)
+- Cite market research with specific statistics
+- Use technical terminology appropriate to the vertical
+- Include comparison data with percentages
+- Mention certifications and quality standards
+
+### 4. PLATFORM-SPECIFIC OPTIMIZATION:
+
+#### AMAZON A10 ALGORITHM:
+- Title: 150-200 chars, [BRAND] + Model + Key Features + Keywords
+- Bullets: Lead with CAPS benefit, follow with feature + data
+- Description: HTML formatting, A+ Content ready
+- Backend Keywords: Include in natural text flow
+- Focus: Conversion rate, relevance, customer satisfaction signals
+
+#### SHOPIFY AIO (AI OVERVIEW):
+- H1: Question-based or direct answer format
+- Introduction: 150 words, answers search query immediately
+- Schema markup ready structure
+- FAQ section with structured data
+- Internal linking placeholders [LINK: article-name]
+- Focus: Informational intent, dwell time, topical authority
+
+#### ETSY SEARCH + BRANDING:
+- Emotional storytelling opening
+- Handmade/personal touch emphasis
+- Materials sourcing transparency
+- Gift-occasion optimization
+- Shop story integration
+- Focus: Brand connection, uniqueness, trust signals
+
+### 5. CONTENT STRUCTURE BY LENGTH:
+
+CONCISE (500-800 words):
+- H1 + 2-3 H2 sections
+- 1 comparison table
+- 3-5 bullet highlights
+- Direct CTA
+
+STANDARD (1000-1500 words):
+- H1 + 4-5 H2 sections with H3 subsections
+- 2 comparison tables
+- FAQ section (3-5 Q&A)
+- Feature-benefit matrix
+- Strong CTA with guarantee
+
+COMPREHENSIVE (2000-3000 words):
+- H1 + 6-8 H2 sections with multiple H3
+- 3+ comparison tables
+- Complete FAQ (8-10 Q&A)
+- Buying guide section
+- Expert tips callouts
+- Multiple CTAs throughout
+- Related topics suggestions
+
+### 6. VERTICAL EXPERTISE:
+
+HOME DECOR & PATIO:
+- Materials: FSC-certified teak, Sunbrella fabric, powder-coated aluminum
+- Standards: OEKO-TEX, Greenguard Gold, UV resistance ratings
+- Keywords: outdoor living, patio furniture, weather-resistant, UV-protected
+
+CAMPING & OUTDOOR:
+- Specs: Denier ratings, R-values, IPX waterproof ratings, lumens
+- Standards: ASTM F1506, ISO 5912, EN ratings
+- Keywords: ultralight, packable, 4-season, backpacking, car camping
+
+### 7. CONVERSION OPTIMIZATION:
+- Address objections in bullet points
+- Use specific numbers ("saves 40% time" not "saves time")
+- Include social proof placeholders [X,XXX+ happy customers]
+- Risk reversal (warranty, guarantee, easy returns)
+- Urgency without pressure (limited stock, seasonal)
+
+### 8. OUTPUT FORMAT:
+- Pure Markdown
+- Proper heading hierarchy
+- Tables for specs/comparisons
+- Bold key phrases
+- Horizontal rules between sections
+- No emojis (professional tone)
+
+Generate content following ALL these specifications.`;
+
+        // ============================================
+        // DOM Elements
+        // ============================================
+        const keywordInput = document.getElementById('keywordInput');
+        const keKeywordsInput = document.getElementById('keKeywordsInput');
+        const sellingPointsInput = document.getElementById('sellingPointsInput');
+        const platformSelect = document.getElementById('platformSelect');
+        const categorySelect = document.getElementById('categorySelect');
+        const lengthSelect = document.getElementById('lengthSelect');
+        const generateBtn = document.getElementById('generateBtn');
+        const outputSection = document.getElementById('outputSection');
+        const sourceEditor = document.getElementById('sourceEditor');
+        const previewPanel = document.getElementById('previewPanel');
+        const copyBtn = document.getElementById('copyBtn');
+        const copyHtmlBtn = document.getElementById('copyHtmlBtn');
+        const regenerateBtn = document.getElementById('regenerateBtn');
+        
+        // Settings Modal
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        const closeModal = document.getElementById('closeModal');
+        const apiKeyInput = document.getElementById('apiKeyInput');
+        const modelSelect = document.getElementById('modelSelect');
+        const saveSettings = document.getElementById('saveSettings');
+        
+        // Toast
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+
+        // ============================================
+        // State
+        // ============================================
+        let isGenerating = false;
+        let abortController = null;
+
+        // ============================================
+        // Settings Modal
+        // ============================================
+        settingsBtn.addEventListener('click', () => {
+            apiKeyInput.value = config.apiKey;
+            modelSelect.value = config.model;
+            settingsModal.classList.remove('hidden');
+            settingsModal.classList.add('flex');
+        });
+
+        closeModal.addEventListener('click', () => {
+            settingsModal.classList.add('hidden');
+            settingsModal.classList.remove('flex');
+        });
+
+        settingsModal.addEventListener('click', (e) => {
+            if (e.target === settingsModal) {
+                settingsModal.classList.add('hidden');
+                settingsModal.classList.remove('flex');
+            }
+        });
+
+        saveSettings.addEventListener('click', () => {
+            config.apiKey = apiKeyInput.value.trim();
+            config.model = modelSelect.value;
+            
+            localStorage.setItem('groq_api_key', config.apiKey);
+            localStorage.setItem('groq_model', config.model);
+            
+            settingsModal.classList.add('hidden');
+            settingsModal.classList.remove('flex');
+            showToast('Configuration saved successfully', 'success');
+        });
+
+        // ============================================
+        // Generate Content
+        // ============================================
+        generateBtn.addEventListener('click', async () => {
+            if (isGenerating) return;
+
+            if (!config.apiKey) {
+                showToast('Please configure your API key in Settings', 'error');
+                settingsBtn.click();
+                return;
+            }
+
+            const keyword = keywordInput.value.trim();
+            if (!keyword) {
+                showToast('Please enter a primary keyword', 'error');
+                keywordInput.focus();
+                return;
+            }
+
+            await startGeneration();
+        });
+
+        async function startGeneration() {
+            isGenerating = true;
+            abortController = new AbortController();
+            
+            const platform = platformSelect.value;
+            const keyword = keywordInput.value.trim();
+            const keKeywords = keKeywordsInput.value.trim();
+            const sellingPoints = sellingPointsInput.value.trim();
+            const category = categorySelect.value;
+            const length = lengthSelect.value;
+            
+            // Update UI
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = `
+                <div class="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <span class="ml-3">Generating AIO Content...</span>
+            `;
+
+            // Show output section
+            outputSection.classList.remove('hidden');
+            outputSection.classList.add('fade-in');
+
+            // Clear previous content
+            sourceEditor.value = '';
+            previewPanel.innerHTML = `
+                <div class="flex items-center justify-center h-full text-slate-400">
+                    <div class="text-center">
+                        <div class="typing-indicator mb-3">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <p class="font-medium">AI is crafting optimized content...</p>
+                        <p class="text-sm mt-2 opacity-70">Applying 2026 AIO algorithms</p>
+                    </div>
+                </div>
+            `;
+
+            // Scroll to output
+            setTimeout(() => {
+                outputSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+
+            try {
+                const userPrompt = buildPrompt(platform, keyword, keKeywords, sellingPoints, category, length);
+
+                const response = await fetch(GROQ_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${config.apiKey}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: config.model,
+                        messages: [
+                            { role: 'system', content: SYSTEM_PROMPT },
+                            { role: 'user', content: userPrompt }
+                        ],
+                        temperature: 0.7,
+                        max_tokens: 4096,
+                        stream: true
+                    }),
+                    signal: abortController.signal
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error?.message || 'API request failed');
+                }
+
+                // Handle streaming response
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let fullContent = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const chunk = decoder.decode(value);
+                    const lines = chunk.split('\n');
+
+                    for (const line of lines) {
+                        if (line.trim() === '' || line.trim() === 'data: [DONE]') continue;
+                        if (!line.startsWith('data: ')) continue;
+
+                        try {
+                            const data = JSON.parse(line.slice(6));
+                            const content = data.choices?.[0]?.delta?.content;
+                            
+                            if (content) {
+                                fullContent += content;
+                                sourceEditor.value = fullContent;
+                                sourceEditor.scrollTop = sourceEditor.scrollHeight;
+                                updatePreview(fullContent);
+                            }
+                        } catch (e) {
+                            // Skip malformed JSON lines
+                        }
+                    }
+                }
+
+                finishGeneration(true);
+
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    showToast('Generation cancelled', 'info');
+                } else {
+                    console.error('Generation error:', error);
+                    showToast(`Error: ${error.message}`, 'error');
+                    previewPanel.innerHTML = `
+                        <div class="text-center text-red-500 py-20">
+                            <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <p class="font-bold text-lg">Generation Failed</p>
+                            <p class="text-sm mt-2 opacity-80">${error.message}</p>
+                        </div>
+                    `;
+                }
+                finishGeneration(false);
+            }
+        }
+
+        function buildPrompt(platform, keyword, keKeywords, sellingPoints, category, length) {
+            const platformNames = {
+                'amazon': 'Amazon Listing (A10 Algorithm)',
+                'shopify': 'Shopify Blog (AIO Focused)',
+                'etsy': 'Etsy Product (Emotional Branding)'
+            };
+            
+            const lengthNames = {
+                'concise': 'Concise (500-800 words)',
+                'standard': 'Standard (1000-1500 words)',
+                'comprehensive': 'Comprehensive (2000-3000 words)'
+            };
+            
+            const categoryNames = {
+                'home-decor': 'Home Decor & Patio Furniture',
+                'camping-outdoor': 'Camping & Outdoor Gear',
+                'kitchen-dining': 'Kitchen & Dining',
+                'bedding-bath': 'Bedding & Bath',
+                'electronics': 'Electronics & Gadgets',
+                'fashion-accessories': 'Fashion & Accessories',
+                'sports-fitness': 'Sports & Fitness',
+                'pet-supplies': 'Pet Supplies'
+            };
+
+            let prompt = `Generate ${platformNames[platform]} for primary keyword: "${keyword}"
+
+Content Specifications:
+- Platform: ${platformNames[platform]}
+- Length: ${lengthNames[length]}
+- Category: ${categoryNames[category] || 'General'}`;
+
+            if (keKeywords) {
+                prompt += `\n\nKeywords Everywhere (KE) Long-tail Keywords to Integrate:\n${keKeywords}\n\nStrategically distribute these KE keywords throughout the content for optimal SEO weight. Use natural placement in headings, body text, and conclusions.`;
+            }
+
+            if (sellingPoints) {
+                prompt += `\n\nKey Selling Points to Feature:\n${sellingPoints}\n\nTransform these features into benefit-driven copy. Address buyer pain points and emphasize value proposition.`;
+            }
+
+            prompt += `\n\nGenerate the complete optimized content now.`;
+
+            return prompt;
+        }
+
+        function finishGeneration(success) {
+            isGenerating = false;
+            abortController = null;
+            
+            generateBtn.disabled = false;
+            generateBtn.innerHTML = `
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+                <span>Generate Optimized Content</span>
+            `;
+            
+            if (success) {
+                showToast('AIO-optimized content generated!', 'success');
+            }
+        }
+
+        function updatePreview(markdown) {
+            if (!markdown) {
+                previewPanel.innerHTML = '<div class="text-center text-slate-400 py-20"><p>Preview will render here</p></div>';
+                return;
+            }
+            previewPanel.innerHTML = marked.parse(markdown);
+        }
+
+        // Real-time preview update when editing source
+        sourceEditor.addEventListener('input', () => {
+            updatePreview(sourceEditor.value);
+        });
+
+        // ============================================
+        // Copy Functions
+        // ============================================
+        copyBtn.addEventListener('click', () => {
+            const content = sourceEditor.value;
+            if (!content) {
+                showToast('No content to copy', 'error');
+                return;
+            }
+            
+            navigator.clipboard.writeText(content).then(() => {
+                showToast('Markdown copied to clipboard!', 'success');
+            }).catch(() => {
+                showToast('Failed to copy', 'error');
+            });
+        });
+
+        copyHtmlBtn.addEventListener('click', () => {
+            const markdown = sourceEditor.value;
+            if (!markdown) {
+                showToast('No content to copy', 'error');
+                return;
+            }
+            
+            const html = marked.parse(markdown);
+            navigator.clipboard.writeText(html).then(() => {
+                showToast('HTML copied to clipboard!', 'success');
+            }).catch(() => {
+                showToast('Failed to copy', 'error');
+            });
+        });
+
+        // Regenerate
+        regenerateBtn.addEventListener('click', () => {
+            if (isGenerating && abortController) {
+                abortController.abort();
+            }
+            startGeneration();
+        });
+
+        // ============================================
+        // Toast Notification
+        // ============================================
+        function showToast(message, type = 'success') {
+            toastMessage.textContent = message;
+            const icon = document.getElementById('toastIcon');
+            
+            if (type === 'error') {
+                icon.className = 'w-6 h-6 text-red-400';
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+            } else if (type === 'info') {
+                icon.className = 'w-6 h-6 text-blue-400';
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+            } else {
+                icon.className = 'w-6 h-6 text-green-400';
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>';
+            }
+            
+            toast.classList.remove('translate-x-full');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 3000);
+        }
+
+        // ============================================
+        // Sync scroll between source and preview
+        // ============================================
+        let isSyncing = false;
+        
+        sourceEditor.addEventListener('scroll', () => {
+            if (!isSyncing) {
+                isSyncing = true;
+                const percentage = sourceEditor.scrollTop / (sourceEditor.scrollHeight - sourceEditor.clientHeight);
+                previewPanel.scrollTop = percentage * (previewPanel.scrollHeight - previewPanel.clientHeight);
+                setTimeout(() => isSyncing = false, 50);
+            }
+        });
+
+        previewPanel.addEventListener('scroll', () => {
+            if (!isSyncing) {
+                isSyncing = true;
+                const percentage = previewPanel.scrollTop / (previewPanel.scrollHeight - previewPanel.clientHeight);
+                sourceEditor.scrollTop = percentage * (sourceEditor.scrollHeight - sourceEditor.clientHeight);
+                setTimeout(() => isSyncing = false, 50);
+            }
+        });
+    </script>
+</body>
+</html>
