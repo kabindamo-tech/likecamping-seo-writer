@@ -250,7 +250,7 @@
         }
         
         .modal {
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(10px);
         }
         
@@ -319,7 +319,7 @@
         .locked-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(10, 10, 15, 0.9);
+            background: rgba(10, 10, 15, 0.95);
             backdrop-filter: blur(4px);
             display: flex;
             align-items: center;
@@ -339,6 +339,24 @@
         .settings-section.unlocked .locked-overlay {
             display: none;
         }
+        
+        .tab-btn {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab-btn.active {
+            color: #818cf8;
+            border-bottom-color: #818cf8;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -355,11 +373,6 @@
                     <h1 class="text-2xl font-bold text-white tracking-tight">Global AI SEO Forge</h1>
                     <p class="text-sm text-slate-400">Enterprise Content Generation Engine</p>
                 </div>
-            </div>
-            
-            <!-- Hidden Settings Access Note -->
-            <div class="text-xs text-slate-600">
-                Press Ctrl+Shift+A for Admin
             </div>
         </header>
 
@@ -494,7 +507,7 @@
                 <h3 class="text-xl font-bold text-white">Generated Output</h3>
                 <div class="flex items-center gap-2">
                     <span class="text-sm text-slate-400">Powered by</span>
-                    <span id="modelBadge" class="badge" style="background: rgba(99, 102, 241, 0.2); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3);">AI Model</span>
+                    <span class="badge" style="background: rgba(99, 102, 241, 0.2); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3);">AI Engine</span>
                 </div>
             </div>
             
@@ -569,7 +582,7 @@
 
     <!-- Admin Settings Modal -->
     <div id="settingsModal" class="modal fixed inset-0 z-50 hidden items-center justify-center p-4">
-        <div class="modal-content rounded-2xl p-8 max-w-lg w-full shadow-2xl">
+        <div class="modal-content rounded-2xl p-8 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
@@ -578,8 +591,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold text-white">Admin Configuration</h3>
-                        <p class="text-xs text-slate-400">Restricted Access</p>
+                        <h3 class="text-xl font-bold text-white">System Configuration</h3>
+                        <p class="text-xs text-slate-400">Advanced Settings</p>
                     </div>
                 </div>
                 <button id="closeModal" class="close-btn p-2 rounded-lg">
@@ -591,66 +604,114 @@
             
             <!-- Master Password Section -->
             <div id="passwordSection" class="mb-6">
-                <label class="block text-sm font-medium text-slate-300 mb-2">Master Password</label>
+                <label class="block text-sm font-medium text-slate-300 mb-2">Authentication Required</label>
                 <div class="flex space-x-3">
                     <input 
                         type="password" 
                         id="masterPasswordInput" 
-                        placeholder="Enter password..."
+                        placeholder="Enter access code..."
                         class="input-field flex-1 px-4 py-3 rounded-lg text-sm"
                     >
                     <button id="unlockBtn" class="unlock-btn px-6 py-3 rounded-lg text-white font-semibold text-sm">
                         Unlock
                     </button>
                 </div>
-                <p id="passwordError" class="text-xs text-red-400 mt-2 hidden">Incorrect password. Access denied.</p>
+                <p id="passwordError" class="text-xs text-red-400 mt-2 hidden">Access denied. Invalid credentials.</p>
             </div>
             
-            <!-- Settings Sections (Locked by default) -->
-            <div id="settingsContainer" class="settings-section locked space-y-4">
+            <!-- Settings Container (Locked by default) -->
+            <div id="settingsContainer" class="settings-section locked">
                 <!-- Locked Overlay -->
                 <div class="locked-overlay">
                     <div class="text-center">
                         <svg class="w-12 h-12 text-slate-500 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                         </svg>
-                        <p class="text-slate-400 text-sm">Enter master password to unlock</p>
+                        <p class="text-slate-400 text-sm">Authentication required</p>
                     </div>
                 </div>
                 
-                <!-- API Provider -->
-                <div>
-                    <label class="block text-sm font-medium text-slate-300 mb-2">API Provider</label>
-                    <select id="providerSelect" class="platform-select w-full px-4 py-3 rounded-lg text-sm">
-                        <option value="groq" selected>Groq</option>
-                        <option value="openai">OpenAI</option>
-                        <option value="deepseek">DeepSeek</option>
-                    </select>
+                <!-- Tabs -->
+                <div class="flex border-b border-slate-700 mb-6">
+                    <button class="tab-btn active px-4 py-3 text-sm font-medium text-slate-300" data-tab="api">API Settings</button>
+                    <button class="tab-btn px-4 py-3 text-sm font-medium text-slate-400" data-tab="prompts">System Prompts</button>
                 </div>
                 
-                <!-- Model Selection -->
-                <div>
-                    <label class="block text-sm font-medium text-slate-300 mb-2">Model</label>
-                    <select id="modelSelect" class="platform-select w-full px-4 py-3 rounded-lg text-sm">
-                        <option value="llama-3.1-70b-versatile" selected>Llama 3.1 70B</option>
-                        <option value="llama3-70b-8192">Llama 3 70B</option>
-                        <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
-                    </select>
+                <!-- API Settings Tab -->
+                <div id="apiTab" class="tab-content active space-y-4">
+                    <!-- API Provider -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">API Provider</label>
+                        <select id="providerSelect" class="platform-select w-full px-4 py-3 rounded-lg text-sm">
+                            <option value="groq" selected>Groq</option>
+                            <option value="openai">OpenAI</option>
+                            <option value="deepseek">DeepSeek</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Model Selection -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Model</label>
+                        <select id="modelSelect" class="platform-select w-full px-4 py-3 rounded-lg text-sm">
+                            <option value="llama-3.1-70b-versatile" selected>Llama 3.1 70B</option>
+                            <option value="llama3-70b-8192">Llama 3 70B</option>
+                            <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
+                        </select>
+                    </div>
+                    
+                    <!-- API Key -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">API Key</label>
+                        <input 
+                            type="password" 
+                            id="apiKeyInput" 
+                            placeholder="Enter your API key..."
+                            class="input-field w-full px-4 py-3 rounded-lg text-sm"
+                        >
+                        <p class="text-xs text-slate-500 mt-2">Stored locally in browser storage.</p>
+                    </div>
                 </div>
                 
-                <!-- API Key -->
-                <div>
-                    <label class="block text-sm font-medium text-slate-300 mb-2">API Key</label>
-                    <input 
-                        type="password" 
-                        id="apiKeyInput" 
-                        placeholder="Enter your API key..."
-                        class="input-field w-full px-4 py-3 rounded-lg text-sm"
-                    >
-                    <p class="text-xs text-slate-500 mt-2">Stored locally in your browser.</p>
+                <!-- System Prompts Tab -->
+                <div id="promptsTab" class="tab-content space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Amazon A10 System Prompt</label>
+                        <textarea 
+                            id="amazonPromptInput" 
+                            class="input-field w-full px-4 py-3 rounded-lg text-sm h-32 resize-none"
+                            placeholder="Custom prompt for Amazon A10 algorithm..."
+                        ></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Shopify AIO System Prompt</label>
+                        <textarea 
+                            id="shopifyPromptInput" 
+                            class="input-field w-full px-4 py-3 rounded-lg text-sm h-32 resize-none"
+                            placeholder="Custom prompt for Shopify AIO..."
+                        ></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Etsy Branding System Prompt</label>
+                        <textarea 
+                            id="etsyPromptInput" 
+                            class="input-field w-full px-4 py-3 rounded-lg text-sm h-32 resize-none"
+                            placeholder="Custom prompt for Etsy emotional branding..."
+                        ></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Base System Prompt</label>
+                        <textarea 
+                            id="basePromptInput" 
+                            class="input-field w-full px-4 py-3 rounded-lg text-sm h-40 resize-none"
+                            placeholder="Base AIO system prompt..."
+                        ></textarea>
+                    </div>
                 </div>
                 
-                <button id="saveSettings" class="w-full generate-btn text-white font-bold py-3 rounded-lg mt-4">
+                <button id="saveSettings" class="w-full generate-btn text-white font-bold py-3 rounded-lg mt-6">
                     Save Configuration
                 </button>
             </div>
@@ -701,18 +762,10 @@
         const MASTER_PASSWORD = 'damo2026';
 
         // ============================================
-        // Load Configuration from localStorage
+        // Default System Prompts
         // ============================================
-        let config = {
-            provider: localStorage.getItem('ai_provider') || 'groq',
-            model: localStorage.getItem('ai_model') || 'llama-3.1-70b-versatile',
-            apiKey: localStorage.getItem('ai_api_key') || ''
-        };
-
-        // ============================================
-        // AIO-Optimized System Prompt (2026 Standard)
-        // ============================================
-        const SYSTEM_PROMPT = `You are an elite AI Optimization (AIO) specialist and enterprise SEO copywriter with deep expertise in Amazon A10, Shopify AIO, and Etsy search algorithms. You create content that ranks #1 and converts visitors into buyers.
+        const DEFAULT_PROMPTS = {
+            base: `You are an elite AI Optimization (AIO) specialist and enterprise SEO copywriter with deep expertise in Amazon A10, Shopify AIO, and Etsy search algorithms. You create content that ranks #1 and converts visitors into buyers.
 
 ## 2026 AIO ALGORITHM REQUIREMENTS:
 
@@ -723,7 +776,6 @@
 - Structure: Answer → Evidence → Explanation
 
 ### 2. KEYWORD EVERYWHERE (KE) INTEGRATION
-- Strategically distribute provided long-tail keywords throughout content
 - Primary keyword: 1.5-2.5% density (natural placement)
 - Long-tail keywords: 0.5-1% density each
 - LSI keywords: Semantic variations in H2/H3 headings
@@ -734,85 +786,66 @@
 - Cite market research with specific statistics
 - Use technical terminology appropriate to the vertical
 - Include comparison data with percentages
-- Mention certifications and quality standards
 
-### 4. PLATFORM-SPECIFIC OPTIMIZATION:
+### 4. CONVERSION OPTIMIZATION:
+- Address objections in bullet points
+- Use specific numbers ("saves 40% time")
+- Include social proof placeholders
+- Risk reversal (warranty, guarantee)
 
-#### AMAZON A10 ALGORITHM:
+### 5. OUTPUT FORMAT:
+- Pure Markdown
+- Proper heading hierarchy
+- Tables for specs/comparisons
+- Bold key phrases
+- No emojis (professional tone)`,
+
+            amazon: `AMAZON A10 ALGORITHM OPTIMIZATION:
 - Title: 150-200 chars, [BRAND] + Model + Key Features + Keywords
 - Bullets: Lead with CAPS benefit, follow with feature + data
 - Description: HTML formatting, A+ Content ready
 - Backend Keywords: Include in natural text flow
 - Focus: Conversion rate, relevance, customer satisfaction signals
+- Include: Materials, dimensions, weight, warranty info
+- Add "Frequently Asked Questions" section
+- End with strong CTA and guarantee statement`,
 
-#### SHOPIFY AIO (AI OVERVIEW):
+            shopify: `SHOPIFY AIO (AI OVERVIEW) OPTIMIZATION:
 - H1: Question-based or direct answer format
 - Introduction: 150 words, answers search query immediately
 - Schema markup ready structure
 - FAQ section with structured data
 - Internal linking placeholders [LINK: article-name]
 - Focus: Informational intent, dwell time, topical authority
+- Include: Expert tips, comparison tables, "People Also Ask" Q&A
+- Conclusion: Summary + CTA + related topics`,
 
-#### ETSY SEARCH + BRANDING:
+            etsy: `ETSY SEARCH + BRANDING OPTIMIZATION:
 - Emotional storytelling opening
 - Handmade/personal touch emphasis
 - Materials sourcing transparency
 - Gift-occasion optimization
 - Shop story integration
 - Focus: Brand connection, uniqueness, trust signals
+- Title: Descriptive, includes materials + style + occasion
+- Perfect For: Gift occasions and recipient ideas
+- Customization: Options available`
+        };
 
-### 5. CONTENT STRUCTURE BY LENGTH:
-
-CONCISE (500-800 words):
-- H1 + 2-3 H2 sections
-- 1 comparison table
-- 3-5 bullet highlights
-- Direct CTA
-
-STANDARD (1000-1500 words):
-- H1 + 4-5 H2 sections with H3 subsections
-- 2 comparison tables
-- FAQ section (3-5 Q&A)
-- Feature-benefit matrix
-- Strong CTA with guarantee
-
-COMPREHENSIVE (2000-3000 words):
-- H1 + 6-8 H2 sections with multiple H3
-- 3+ comparison tables
-- Complete FAQ (8-10 Q&A)
-- Buying guide section
-- Expert tips callouts
-- Multiple CTAs throughout
-- Related topics suggestions
-
-### 6. VERTICAL EXPERTISE:
-
-HOME DECOR & PATIO:
-- Materials: FSC-certified teak, Sunbrella fabric, powder-coated aluminum
-- Standards: OEKO-TEX, Greenguard Gold, UV resistance ratings
-- Keywords: outdoor living, patio furniture, weather-resistant, UV-protected
-
-CAMPING & OUTDOOR:
-- Specs: Denier ratings, R-values, IPX waterproof ratings, lumens
-- Standards: ASTM F1506, ISO 5912, EN ratings
-- Keywords: ultralight, packable, 4-season, backpacking, car camping
-
-### 7. CONVERSION OPTIMIZATION:
-- Address objections in bullet points
-- Use specific numbers ("saves 40% time" not "saves time")
-- Include social proof placeholders [X,XXX+ happy customers]
-- Risk reversal (warranty, guarantee, easy returns)
-- Urgency without pressure (limited stock, seasonal)
-
-### 8. OUTPUT FORMAT:
-- Pure Markdown
-- Proper heading hierarchy
-- Tables for specs/comparisons
-- Bold key phrases
-- Horizontal rules between sections
-- No emojis (professional tone)
-
-Generate content following ALL these specifications.`;
+        // ============================================
+        // Load Configuration from localStorage
+        // ============================================
+        let config = {
+            provider: localStorage.getItem('ai_provider') || 'groq',
+            model: localStorage.getItem('ai_model') || 'llama-3.1-70b-versatile',
+            apiKey: localStorage.getItem('ai_api_key') || '',
+            prompts: {
+                base: localStorage.getItem('prompt_base') || DEFAULT_PROMPTS.base,
+                amazon: localStorage.getItem('prompt_amazon') || DEFAULT_PROMPTS.amazon,
+                shopify: localStorage.getItem('prompt_shopify') || DEFAULT_PROMPTS.shopify,
+                etsy: localStorage.getItem('prompt_etsy') || DEFAULT_PROMPTS.etsy
+            }
+        };
 
         // ============================================
         // DOM Elements
@@ -831,7 +864,6 @@ Generate content following ALL these specifications.`;
         const copyBtn = document.getElementById('copyBtn');
         const copyHtmlBtn = document.getElementById('copyHtmlBtn');
         const regenerateBtn = document.getElementById('regenerateBtn');
-        const modelBadge = document.getElementById('modelBadge');
         
         // Admin Modal
         const settingsModal = document.getElementById('settingsModal');
@@ -846,6 +878,16 @@ Generate content following ALL these specifications.`;
         const settingsContainer = document.getElementById('settingsContainer');
         const passwordError = document.getElementById('passwordError');
         
+        // Prompt inputs
+        const amazonPromptInput = document.getElementById('amazonPromptInput');
+        const shopifyPromptInput = document.getElementById('shopifyPromptInput');
+        const etsyPromptInput = document.getElementById('etsyPromptInput');
+        const basePromptInput = document.getElementById('basePromptInput');
+        
+        // Tabs
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
         // Toast
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toastMessage');
@@ -858,7 +900,7 @@ Generate content following ALL these specifications.`;
         let isUnlocked = false;
 
         // ============================================
-        // Initialize Model Select based on Provider
+        // Initialize
         // ============================================
         function updateModelOptions(provider) {
             const models = PROVIDER_CONFIG[provider].models;
@@ -867,21 +909,44 @@ Generate content following ALL these specifications.`;
             ).join('');
         }
 
-        // Initialize
+        // Initialize settings
         providerSelect.value = config.provider;
         updateModelOptions(config.provider);
         apiKeyInput.value = config.apiKey;
+        amazonPromptInput.value = config.prompts.amazon;
+        shopifyPromptInput.value = config.prompts.shopify;
+        etsyPromptInput.value = config.prompts.etsy;
+        basePromptInput.value = config.prompts.base;
 
         // Provider change handler
         providerSelect.addEventListener('change', () => {
-            const provider = providerSelect.value;
-            updateModelOptions(provider);
-            // Select first model by default
+            updateModelOptions(providerSelect.value);
             modelSelect.selectedIndex = 0;
         });
 
         // ============================================
-        // Admin Access: Ctrl+Shift+A
+        // Tab Switching
+        // ============================================
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tab = btn.dataset.tab;
+                
+                tabBtns.forEach(b => {
+                    b.classList.remove('active');
+                    b.classList.add('text-slate-400');
+                    b.classList.remove('text-slate-300');
+                });
+                btn.classList.add('active');
+                btn.classList.remove('text-slate-400');
+                btn.classList.add('text-slate-300');
+                
+                tabContents.forEach(c => c.classList.remove('active'));
+                document.getElementById(tab + 'Tab').classList.add('active');
+            });
+        });
+
+        // ============================================
+        // Admin Access: Ctrl+Shift+A (Silent)
         // ============================================
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.shiftKey && e.key === 'A') {
@@ -916,7 +981,7 @@ Generate content following ALL these specifications.`;
                 settingsContainer.classList.add('unlocked');
                 passwordSection.classList.add('hidden');
                 passwordError.classList.add('hidden');
-                showToast('Admin access granted', 'success');
+                showToast('Access granted', 'success');
             } else {
                 passwordError.classList.remove('hidden');
                 masterPasswordInput.value = '';
@@ -948,26 +1013,54 @@ Generate content following ALL these specifications.`;
             config.provider = providerSelect.value;
             config.model = modelSelect.value;
             config.apiKey = apiKeyInput.value.trim();
+            config.prompts.amazon = amazonPromptInput.value;
+            config.prompts.shopify = shopifyPromptInput.value;
+            config.prompts.etsy = etsyPromptInput.value;
+            config.prompts.base = basePromptInput.value;
             
             localStorage.setItem('ai_provider', config.provider);
             localStorage.setItem('ai_model', config.model);
             localStorage.setItem('ai_api_key', config.apiKey);
+            localStorage.setItem('prompt_amazon', config.prompts.amazon);
+            localStorage.setItem('prompt_shopify', config.prompts.shopify);
+            localStorage.setItem('prompt_etsy', config.prompts.etsy);
+            localStorage.setItem('prompt_base', config.prompts.base);
             
             settingsModal.classList.add('hidden');
             settingsModal.classList.remove('flex');
-            showToast('Configuration saved successfully', 'success');
+            showToast('Configuration saved', 'success');
         });
 
         // ============================================
-        // Generate Content
+        // KE Keyword Density Calculator
+        // ============================================
+        function calculateKEDensity(content, primaryKeyword, keKeywords) {
+            const wordCount = content.split(/\s+/).length;
+            const primaryCount = (content.match(new RegExp(primaryKeyword, 'gi')) || []).length;
+            const primaryDensity = ((primaryCount / wordCount) * 100).toFixed(2);
+            
+            let keResults = [];
+            if (keKeywords) {
+                const keList = keKeywords.split(/\n|,/).map(k => k.trim()).filter(k => k);
+                keList.forEach(ke => {
+                    const count = (content.match(new RegExp(ke.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi')) || []).length;
+                    const density = ((count / wordCount) * 100).toFixed(2);
+                    keResults.push({ keyword: ke, count, density });
+                });
+            }
+            
+            return {
+                wordCount,
+                primary: { keyword: primaryKeyword, count: primaryCount, density: primaryDensity },
+                keKeywords: keResults
+            };
+        }
+
+        // ============================================
+        // Generate Content - Cloud API Endpoint
         // ============================================
         generateBtn.addEventListener('click', async () => {
             if (isGenerating) return;
-
-            if (!config.apiKey) {
-                showToast('Please configure API key (Ctrl+Shift+A)', 'error');
-                return;
-            }
 
             const keyword = keywordInput.value.trim();
             if (!keyword) {
@@ -999,12 +1092,8 @@ Generate content following ALL these specifications.`;
                     <span></span>
                     <span></span>
                 </div>
-                <span class="ml-3">Generating AIO Content...</span>
+                <span class="ml-3">Generating...</span>
             `;
-
-            // Update model badge
-            const providerName = config.provider.charAt(0).toUpperCase() + config.provider.slice(1);
-            modelBadge.textContent = `${providerName} · ${config.model}`;
 
             // Show output section
             outputSection.classList.remove('hidden');
@@ -1020,8 +1109,7 @@ Generate content following ALL these specifications.`;
                             <span></span>
                             <span></span>
                         </div>
-                        <p class="font-medium">AI is crafting optimized content...</p>
-                        <p class="text-sm mt-2 opacity-70">Applying 2026 AIO algorithms</p>
+                        <p class="font-medium">Crafting optimized content...</p>
                     </div>
                 </div>
             `;
@@ -1032,31 +1120,35 @@ Generate content following ALL these specifications.`;
             }, 100);
 
             try {
+                // Build system prompt based on platform
+                const platformPrompt = config.prompts[platform] || '';
+                const systemPrompt = `${config.prompts.base}\n\n${platformPrompt}`;
+                
                 const userPrompt = buildPrompt(platform, keyword, keKeywords, sellingPoints, audience, category, length);
-                const apiUrl = `${PROVIDER_CONFIG[config.provider].baseUrl}/chat/completions`;
 
-                const response = await fetch(apiUrl, {
+                // Send to cloud endpoint
+                const response = await fetch('/api/generate', {
                     method: 'POST',
                     headers: {
-                        'Authorization': `Bearer ${config.apiKey}`,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
+                        provider: config.provider,
                         model: config.model,
-                        messages: [
-                            { role: 'system', content: SYSTEM_PROMPT },
-                            { role: 'user', content: userPrompt }
-                        ],
-                        temperature: 0.7,
-                        max_tokens: 4096,
-                        stream: true
+                        systemPrompt: systemPrompt,
+                        userPrompt: userPrompt,
+                        parameters: {
+                            temperature: 0.7,
+                            max_tokens: 4096,
+                            stream: true
+                        }
                     }),
                     signal: abortController.signal
                 });
 
                 if (!response.ok) {
                     const error = await response.json();
-                    throw new Error(error.error?.message || 'API request failed');
+                    throw new Error(error.message || 'API request failed');
                 }
 
                 // Handle streaming response
@@ -1077,7 +1169,7 @@ Generate content following ALL these specifications.`;
 
                         try {
                             const data = JSON.parse(line.slice(6));
-                            const content = data.choices?.[0]?.delta?.content;
+                            const content = data.choices?.[0]?.delta?.content || data.content;
                             
                             if (content) {
                                 fullContent += content;
@@ -1090,6 +1182,10 @@ Generate content following ALL these specifications.`;
                         }
                     }
                 }
+
+                // Calculate KE density
+                const density = calculateKEDensity(fullContent, keyword, keKeywords);
+                console.log('KE Density Analysis:', density);
 
                 finishGeneration(true);
 
@@ -1149,11 +1245,11 @@ Content Specifications:
             }
 
             if (keKeywords) {
-                prompt += `\n\nKeywords Everywhere (KE) Long-tail Keywords to Integrate:\n${keKeywords}\n\nStrategically distribute these KE keywords throughout the content for optimal SEO weight. Primary keyword density: 1.5-2.5%. Long-tail keywords: 0.5-1% each. Use natural placement in headings, body text, and conclusions.`;
+                prompt += `\n\nKeywords Everywhere (KE) Long-tail Keywords to Integrate:\n${keKeywords}\n\nStrategically distribute these KE keywords throughout the content for optimal SEO weight. Primary keyword density: 1.5-2.5%. Long-tail keywords: 0.5-1% each.`;
             }
 
             if (sellingPoints) {
-                prompt += `\n\nKey Selling Points to Feature:\n${sellingPoints}\n\nTransform these features into benefit-driven copy. Address buyer pain points and emphasize value proposition.`;
+                prompt += `\n\nKey Selling Points to Feature:\n${sellingPoints}\n\nTransform these features into benefit-driven copy.`;
             }
 
             prompt += `\n\nGenerate the complete optimized content now.`;
@@ -1174,7 +1270,7 @@ Content Specifications:
             `;
             
             if (success) {
-                showToast('AIO-optimized content generated!', 'success');
+                showToast('Content generated successfully', 'success');
             }
         }
 
@@ -1202,7 +1298,7 @@ Content Specifications:
             }
             
             navigator.clipboard.writeText(content).then(() => {
-                showToast('Markdown copied to clipboard!', 'success');
+                showToast('Markdown copied to clipboard', 'success');
             }).catch(() => {
                 showToast('Failed to copy', 'error');
             });
@@ -1217,7 +1313,7 @@ Content Specifications:
             
             const html = marked.parse(markdown);
             navigator.clipboard.writeText(html).then(() => {
-                showToast('HTML copied to clipboard!', 'success');
+                showToast('HTML copied to clipboard', 'success');
             }).catch(() => {
                 showToast('Failed to copy', 'error');
             });
