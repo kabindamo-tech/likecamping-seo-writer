@@ -109,15 +109,14 @@
             cursor: not-allowed;
         }
         
-        .settings-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .unlock-btn {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
             transition: all 0.3s ease;
         }
         
-        .settings-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #818cf8;
+        .unlock-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px -5px rgba(34, 197, 94, 0.4);
         }
         
         .editor-area {
@@ -251,7 +250,7 @@
         }
         
         .modal {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(10px);
         }
         
@@ -316,6 +315,30 @@
             background: rgba(255, 255, 255, 0.1);
             transform: rotate(90deg);
         }
+        
+        .locked-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 10, 15, 0.9);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.75rem;
+            z-index: 10;
+        }
+        
+        .settings-section {
+            position: relative;
+        }
+        
+        .settings-section.locked .locked-overlay {
+            display: flex;
+        }
+        
+        .settings-section.unlocked .locked-overlay {
+            display: none;
+        }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -334,13 +357,10 @@
                 </div>
             </div>
             
-            <!-- Settings Button -->
-            <button id="settingsBtn" class="settings-btn p-3 rounded-xl" title="API Configuration">
-                <svg class="w-6 h-6 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                </svg>
-            </button>
+            <!-- Hidden Settings Access Note -->
+            <div class="text-xs text-slate-600">
+                Press Ctrl+Shift+A for Admin
+            </div>
         </header>
 
         <!-- Hero Section -->
@@ -387,14 +407,14 @@
                 <p class="text-sm text-slate-500 mt-2">Enter your main target keyword for SEO optimization.</p>
             </div>
 
-            <!-- KE Keywords (Long-tail) -->
+            <!-- KE Long-tail Keywords -->
             <div class="mb-6">
                 <label class="block text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">
                     KE Long-tail Keywords (Optional)
                 </label>
                 <textarea 
                     id="keKeywordsInput" 
-                    placeholder="Paste your Keywords Everywhere long-tail keywords here...&#10;e.g., best waterproof tent for family camping, lightweight backpacking tent 2 person, 4 season camping tent with stove jack"
+                    placeholder="Paste your Keywords Everywhere long-tail keywords here...&#10;e.g., best waterproof tent for family camping, lightweight backpacking tent 2 person"
                     class="input-field w-full px-5 py-4 rounded-xl text-base h-24 resize-none"
                 ></textarea>
                 <p class="text-sm text-slate-500 mt-2">AI will strategically distribute these throughout the content for maximum SEO weight.</p>
@@ -420,16 +440,17 @@
                     </select>
                 </div>
 
-                <!-- Content Length -->
+                <!-- Target Audience -->
                 <div>
                     <label class="block text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">
-                        Content Length
+                        Target Audience
                     </label>
-                    <select id="lengthSelect" class="platform-select w-full px-5 py-4 rounded-xl text-base">
-                        <option value="concise">Concise (500-800 words)</option>
-                        <option value="standard" selected>Standard (1000-1500 words)</option>
-                        <option value="comprehensive">Comprehensive (2000-3000 words)</option>
-                    </select>
+                    <input 
+                        type="text" 
+                        id="audienceInput" 
+                        placeholder="e.g., outdoor enthusiasts, new homeowners"
+                        class="input-field w-full px-5 py-4 rounded-xl text-base"
+                    >
                 </div>
             </div>
 
@@ -444,6 +465,18 @@
                     class="input-field w-full px-5 py-4 rounded-xl text-base h-28 resize-none"
                 ></textarea>
                 <p class="text-sm text-slate-500 mt-2">AI will weave these features into benefit-driven copy.</p>
+            </div>
+
+            <!-- Content Length -->
+            <div class="mb-8">
+                <label class="block text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">
+                    Content Length
+                </label>
+                <select id="lengthSelect" class="platform-select w-full px-5 py-4 rounded-xl text-base">
+                    <option value="concise">Concise (500-800 words)</option>
+                    <option value="standard" selected>Standard (1000-1500 words)</option>
+                    <option value="comprehensive">Comprehensive (2000-3000 words)</option>
+                </select>
             </div>
 
             <!-- Generate Button -->
@@ -461,7 +494,7 @@
                 <h3 class="text-xl font-bold text-white">Generated Output</h3>
                 <div class="flex items-center gap-2">
                     <span class="text-sm text-slate-400">Powered by</span>
-                    <span class="badge" style="background: rgba(99, 102, 241, 0.2); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3);">Llama 3.1 70B</span>
+                    <span id="modelBadge" class="badge" style="background: rgba(99, 102, 241, 0.2); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3);">AI Model</span>
                 </div>
             </div>
             
@@ -534,11 +567,21 @@
         </footer>
     </div>
 
-    <!-- Settings Modal -->
+    <!-- Admin Settings Modal -->
     <div id="settingsModal" class="modal fixed inset-0 z-50 hidden items-center justify-center p-4">
-        <div class="modal-content rounded-2xl p-8 max-w-md w-full shadow-2xl">
+        <div class="modal-content rounded-2xl p-8 max-w-lg w-full shadow-2xl">
             <div class="flex items-center justify-between mb-6">
-                <h3 class="text-xl font-bold text-white">API Configuration</h3>
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Admin Configuration</h3>
+                        <p class="text-xs text-slate-400">Restricted Access</p>
+                    </div>
+                </div>
                 <button id="closeModal" class="close-btn p-2 rounded-lg">
                     <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -546,26 +589,65 @@
                 </button>
             </div>
             
-            <div class="space-y-4">
+            <!-- Master Password Section -->
+            <div id="passwordSection" class="mb-6">
+                <label class="block text-sm font-medium text-slate-300 mb-2">Master Password</label>
+                <div class="flex space-x-3">
+                    <input 
+                        type="password" 
+                        id="masterPasswordInput" 
+                        placeholder="Enter password..."
+                        class="input-field flex-1 px-4 py-3 rounded-lg text-sm"
+                    >
+                    <button id="unlockBtn" class="unlock-btn px-6 py-3 rounded-lg text-white font-semibold text-sm">
+                        Unlock
+                    </button>
+                </div>
+                <p id="passwordError" class="text-xs text-red-400 mt-2 hidden">Incorrect password. Access denied.</p>
+            </div>
+            
+            <!-- Settings Sections (Locked by default) -->
+            <div id="settingsContainer" class="settings-section locked space-y-4">
+                <!-- Locked Overlay -->
+                <div class="locked-overlay">
+                    <div class="text-center">
+                        <svg class="w-12 h-12 text-slate-500 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        <p class="text-slate-400 text-sm">Enter master password to unlock</p>
+                    </div>
+                </div>
+                
+                <!-- API Provider -->
                 <div>
-                    <label class="block text-sm font-medium text-slate-300 mb-2">Groq API Key</label>
+                    <label class="block text-sm font-medium text-slate-300 mb-2">API Provider</label>
+                    <select id="providerSelect" class="platform-select w-full px-4 py-3 rounded-lg text-sm">
+                        <option value="groq" selected>Groq</option>
+                        <option value="openai">OpenAI</option>
+                        <option value="deepseek">DeepSeek</option>
+                    </select>
+                </div>
+                
+                <!-- Model Selection -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-2">Model</label>
+                    <select id="modelSelect" class="platform-select w-full px-4 py-3 rounded-lg text-sm">
+                        <option value="llama-3.1-70b-versatile" selected>Llama 3.1 70B</option>
+                        <option value="llama3-70b-8192">Llama 3 70B</option>
+                        <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
+                    </select>
+                </div>
+                
+                <!-- API Key -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-2">API Key</label>
                     <input 
                         type="password" 
                         id="apiKeyInput" 
-                        placeholder="gsk_..."
+                        placeholder="Enter your API key..."
                         class="input-field w-full px-4 py-3 rounded-lg text-sm"
                     >
-                    <p class="text-xs text-slate-500 mt-2">Your API key is stored locally in your browser.</p>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-slate-300 mb-2">Model Selection</label>
-                    <select id="modelSelect" class="platform-select w-full px-4 py-3 rounded-lg text-sm">
-                        <option value="llama-3.1-70b-versatile" selected>Llama 3.1 70B (Recommended)</option>
-                        <option value="llama3-70b-8192">Llama 3 70B</option>
-                        <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
-                        <option value="gemma-7b-it">Gemma 7B</option>
-                    </select>
+                    <p class="text-xs text-slate-500 mt-2">Stored locally in your browser.</p>
                 </div>
                 
                 <button id="saveSettings" class="w-full generate-btn text-white font-bold py-3 rounded-lg mt-4">
@@ -587,14 +669,44 @@
 
     <script>
         // ============================================
-        // Configuration & State
+        // Provider & Model Configuration
         // ============================================
-        const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-        
-        // Load from localStorage
+        const PROVIDER_CONFIG = {
+            groq: {
+                baseUrl: 'https://api.groq.com/openai/v1',
+                models: [
+                    { value: 'llama-3.1-70b-versatile', label: 'Llama 3.1 70B' },
+                    { value: 'llama3-70b-8192', label: 'Llama 3 70B' },
+                    { value: 'mixtral-8x7b-32768', label: 'Mixtral 8x7B' },
+                    { value: 'gemma-7b-it', label: 'Gemma 7B' }
+                ]
+            },
+            openai: {
+                baseUrl: 'https://api.openai.com/v1',
+                models: [
+                    { value: 'gpt-4o', label: 'GPT-4o' },
+                    { value: 'gpt-4o-mini', label: 'GPT-4o Mini' },
+                    { value: 'gpt-4-turbo', label: 'GPT-4 Turbo' }
+                ]
+            },
+            deepseek: {
+                baseUrl: 'https://api.deepseek.com/v1',
+                models: [
+                    { value: 'deepseek-chat', label: 'DeepSeek Chat' },
+                    { value: 'deepseek-coder', label: 'DeepSeek Coder' }
+                ]
+            }
+        };
+
+        const MASTER_PASSWORD = 'damo2026';
+
+        // ============================================
+        // Load Configuration from localStorage
+        // ============================================
         let config = {
-            apiKey: localStorage.getItem('groq_api_key') || '',
-            model: localStorage.getItem('groq_model') || 'llama-3.1-70b-versatile'
+            provider: localStorage.getItem('ai_provider') || 'groq',
+            model: localStorage.getItem('ai_model') || 'llama-3.1-70b-versatile',
+            apiKey: localStorage.getItem('ai_api_key') || ''
         };
 
         // ============================================
@@ -708,6 +820,7 @@ Generate content following ALL these specifications.`;
         const keywordInput = document.getElementById('keywordInput');
         const keKeywordsInput = document.getElementById('keKeywordsInput');
         const sellingPointsInput = document.getElementById('sellingPointsInput');
+        const audienceInput = document.getElementById('audienceInput');
         const platformSelect = document.getElementById('platformSelect');
         const categorySelect = document.getElementById('categorySelect');
         const lengthSelect = document.getElementById('lengthSelect');
@@ -718,14 +831,20 @@ Generate content following ALL these specifications.`;
         const copyBtn = document.getElementById('copyBtn');
         const copyHtmlBtn = document.getElementById('copyHtmlBtn');
         const regenerateBtn = document.getElementById('regenerateBtn');
+        const modelBadge = document.getElementById('modelBadge');
         
-        // Settings Modal
-        const settingsBtn = document.getElementById('settingsBtn');
+        // Admin Modal
         const settingsModal = document.getElementById('settingsModal');
         const closeModal = document.getElementById('closeModal');
-        const apiKeyInput = document.getElementById('apiKeyInput');
+        const providerSelect = document.getElementById('providerSelect');
         const modelSelect = document.getElementById('modelSelect');
+        const apiKeyInput = document.getElementById('apiKeyInput');
         const saveSettings = document.getElementById('saveSettings');
+        const masterPasswordInput = document.getElementById('masterPasswordInput');
+        const unlockBtn = document.getElementById('unlockBtn');
+        const passwordSection = document.getElementById('passwordSection');
+        const settingsContainer = document.getElementById('settingsContainer');
+        const passwordError = document.getElementById('passwordError');
         
         // Toast
         const toast = document.getElementById('toast');
@@ -736,17 +855,82 @@ Generate content following ALL these specifications.`;
         // ============================================
         let isGenerating = false;
         let abortController = null;
+        let isUnlocked = false;
 
         // ============================================
-        // Settings Modal
+        // Initialize Model Select based on Provider
         // ============================================
-        settingsBtn.addEventListener('click', () => {
-            apiKeyInput.value = config.apiKey;
-            modelSelect.value = config.model;
-            settingsModal.classList.remove('hidden');
-            settingsModal.classList.add('flex');
+        function updateModelOptions(provider) {
+            const models = PROVIDER_CONFIG[provider].models;
+            modelSelect.innerHTML = models.map(m => 
+                `<option value="${m.value}" ${m.value === config.model ? 'selected' : ''}>${m.label}</option>`
+            ).join('');
+        }
+
+        // Initialize
+        providerSelect.value = config.provider;
+        updateModelOptions(config.provider);
+        apiKeyInput.value = config.apiKey;
+
+        // Provider change handler
+        providerSelect.addEventListener('change', () => {
+            const provider = providerSelect.value;
+            updateModelOptions(provider);
+            // Select first model by default
+            modelSelect.selectedIndex = 0;
         });
 
+        // ============================================
+        // Admin Access: Ctrl+Shift+A
+        // ============================================
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+                e.preventDefault();
+                openSettings();
+            }
+        });
+
+        function openSettings() {
+            settingsModal.classList.remove('hidden');
+            settingsModal.classList.add('flex');
+            masterPasswordInput.value = '';
+            passwordError.classList.add('hidden');
+            
+            if (!isUnlocked) {
+                settingsContainer.classList.add('locked');
+                settingsContainer.classList.remove('unlocked');
+                passwordSection.classList.remove('hidden');
+            } else {
+                settingsContainer.classList.remove('locked');
+                settingsContainer.classList.add('unlocked');
+                passwordSection.classList.add('hidden');
+            }
+        }
+
+        // Unlock Handler
+        unlockBtn.addEventListener('click', () => {
+            const password = masterPasswordInput.value;
+            if (password === MASTER_PASSWORD) {
+                isUnlocked = true;
+                settingsContainer.classList.remove('locked');
+                settingsContainer.classList.add('unlocked');
+                passwordSection.classList.add('hidden');
+                passwordError.classList.add('hidden');
+                showToast('Admin access granted', 'success');
+            } else {
+                passwordError.classList.remove('hidden');
+                masterPasswordInput.value = '';
+                masterPasswordInput.focus();
+            }
+        });
+
+        masterPasswordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                unlockBtn.click();
+            }
+        });
+
+        // Close Modal
         closeModal.addEventListener('click', () => {
             settingsModal.classList.add('hidden');
             settingsModal.classList.remove('flex');
@@ -759,12 +943,15 @@ Generate content following ALL these specifications.`;
             }
         });
 
+        // Save Settings
         saveSettings.addEventListener('click', () => {
-            config.apiKey = apiKeyInput.value.trim();
+            config.provider = providerSelect.value;
             config.model = modelSelect.value;
+            config.apiKey = apiKeyInput.value.trim();
             
-            localStorage.setItem('groq_api_key', config.apiKey);
-            localStorage.setItem('groq_model', config.model);
+            localStorage.setItem('ai_provider', config.provider);
+            localStorage.setItem('ai_model', config.model);
+            localStorage.setItem('ai_api_key', config.apiKey);
             
             settingsModal.classList.add('hidden');
             settingsModal.classList.remove('flex');
@@ -778,8 +965,7 @@ Generate content following ALL these specifications.`;
             if (isGenerating) return;
 
             if (!config.apiKey) {
-                showToast('Please configure your API key in Settings', 'error');
-                settingsBtn.click();
+                showToast('Please configure API key (Ctrl+Shift+A)', 'error');
                 return;
             }
 
@@ -801,6 +987,7 @@ Generate content following ALL these specifications.`;
             const keyword = keywordInput.value.trim();
             const keKeywords = keKeywordsInput.value.trim();
             const sellingPoints = sellingPointsInput.value.trim();
+            const audience = audienceInput.value.trim();
             const category = categorySelect.value;
             const length = lengthSelect.value;
             
@@ -814,6 +1001,10 @@ Generate content following ALL these specifications.`;
                 </div>
                 <span class="ml-3">Generating AIO Content...</span>
             `;
+
+            // Update model badge
+            const providerName = config.provider.charAt(0).toUpperCase() + config.provider.slice(1);
+            modelBadge.textContent = `${providerName} · ${config.model}`;
 
             // Show output section
             outputSection.classList.remove('hidden');
@@ -841,9 +1032,10 @@ Generate content following ALL these specifications.`;
             }, 100);
 
             try {
-                const userPrompt = buildPrompt(platform, keyword, keKeywords, sellingPoints, category, length);
+                const userPrompt = buildPrompt(platform, keyword, keKeywords, sellingPoints, audience, category, length);
+                const apiUrl = `${PROVIDER_CONFIG[config.provider].baseUrl}/chat/completions`;
 
-                const response = await fetch(GROQ_API_URL, {
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${config.apiKey}`,
@@ -921,7 +1113,7 @@ Generate content following ALL these specifications.`;
             }
         }
 
-        function buildPrompt(platform, keyword, keKeywords, sellingPoints, category, length) {
+        function buildPrompt(platform, keyword, keKeywords, sellingPoints, audience, category, length) {
             const platformNames = {
                 'amazon': 'Amazon Listing (A10 Algorithm)',
                 'shopify': 'Shopify Blog (AIO Focused)',
@@ -952,8 +1144,12 @@ Content Specifications:
 - Length: ${lengthNames[length]}
 - Category: ${categoryNames[category] || 'General'}`;
 
+            if (audience) {
+                prompt += `\n- Target Audience: ${audience}`;
+            }
+
             if (keKeywords) {
-                prompt += `\n\nKeywords Everywhere (KE) Long-tail Keywords to Integrate:\n${keKeywords}\n\nStrategically distribute these KE keywords throughout the content for optimal SEO weight. Use natural placement in headings, body text, and conclusions.`;
+                prompt += `\n\nKeywords Everywhere (KE) Long-tail Keywords to Integrate:\n${keKeywords}\n\nStrategically distribute these KE keywords throughout the content for optimal SEO weight. Primary keyword density: 1.5-2.5%. Long-tail keywords: 0.5-1% each. Use natural placement in headings, body text, and conclusions.`;
             }
 
             if (sellingPoints) {
