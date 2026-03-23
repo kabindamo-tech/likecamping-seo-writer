@@ -1127,7 +1127,7 @@
                 const userPrompt = buildPrompt(platform, keyword, keKeywords, sellingPoints, audience, category, length);
 
                 // Send to cloud endpoint
-                const response = await fetch('/api/generate', {
+                const response = await fetch('https://damp-breeze-e25elikecamping-api-proxy.kabin7691.workers.dev', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
