@@ -442,14 +442,11 @@
                     </label>
                     <select id="categorySelect" class="platform-select w-full px-5 py-4 rounded-xl text-base">
                         <option value="">Select Category...</option>
-                        <option value="home-decor">Home Decor & Patio Furniture</option>
+                        <option value="eco-home">Eco-Friendly Home Tech</option>
+                        <option value="sustainable">Sustainable Lifestyle</option>
                         <option value="camping-outdoor">Camping & Outdoor Gear</option>
-                        <option value="kitchen-dining">Kitchen & Dining</option>
-                        <option value="bedding-bath">Bedding & Bath</option>
-                        <option value="electronics">Electronics & Gadgets</option>
-                        <option value="fashion-accessories">Fashion & Accessories</option>
-                        <option value="sports-fitness">Sports & Fitness</option>
-                        <option value="pet-supplies">Pet Supplies</option>
+                        <option value="solar-power">Solar Power System</option>
+                        <option value="automotive">Automotive & Off-Road</option>
                     </select>
                 </div>
 
@@ -762,7 +759,43 @@
         const MASTER_PASSWORD = 'damo2026';
 
         // ============================================
-        // Default System Prompts
+        // Category-Specific Voice & Terminology
+        // ============================================
+        const CATEGORY_VOICES = {
+            'eco-home': {
+                tone: 'sophisticated-eco-geek',
+                vocabulary: ['Minimalism', 'Carbon Neutral', 'Circular Economy', 'Net Zero', 'Biophilic Design', 'Regenerative', 'Closed-Loop', 'Conscious Consumption', 'Slow Living', 'Mindful Spaces'],
+                style: 'Elegant, refined, appeals to high-net-worth eco-conscious consumers. Use aspirational language that speaks to sustainability as luxury.',
+                expertise: 'Reference LEED certification, Energy Star ratings, Cradle to Cradle standards, B-Corp values.'
+            },
+            'sustainable': {
+                tone: 'conscious-lifestyle-curator',
+                vocabulary: ['Ethical Sourcing', 'Zero Waste', 'Plastic-Free', 'Fair Trade', 'Transparent Supply Chain', 'Impact Investing', 'Conscious Capitalism', 'Regenerative Agriculture', 'Biodegradable', 'Compostable'],
+                style: 'Thoughtful, values-driven, connecting personal choices to global impact. Appeals to educated millennials and Gen Z.',
+                expertise: 'Reference B-Corp certification, 1% for the Planet, Climate Neutral, Fair Trade Federation.'
+            },
+            'camping-outdoor': {
+                tone: 'adventure-hardcore',
+                vocabulary: ['Expedition-Grade', 'Weatherproof', 'Ultralight', 'Packable', '4-Season', 'Backcountry', 'Thru-Hiking', 'Bushcraft', 'Leave No Trace', 'Alpine Rated'],
+                style: 'Bold, action-oriented, speaks to outdoor enthusiasts who demand performance. Technical precision with emotional connection to wilderness.',
+                expertise: 'Reference ASTM F1506, IPX ratings, Denier counts, R-values, EN standards, Leave No Trace principles.'
+            },
+            'solar-power': {
+                tone: 'technical-authority',
+                vocabulary: ['Watt-Hours', 'Amp-Hours', 'Pure Sine Wave', 'MPPT Controller', 'Off-Grid Reliability', 'Depth of Discharge', 'Cycle Life', 'Inverter Efficiency', 'Peak Sun Hours', 'Grid-Tie Inverter'],
+                style: 'Precise, data-driven, emphasizes technical specifications and real-world performance metrics. Appeals to engineers and off-grid enthusiasts.',
+                expertise: 'Reference Wh/Ah conversions, inverter types (pure vs modified sine wave), charge controller technologies, battery chemistries (LiFePO4 vs Li-ion), solar irradiance calculations.'
+            },
+            'automotive': {
+                tone: 'offroad-warrior',
+                vocabulary: ['All-Terrain', 'Recovery Gear', 'Winch Rating', 'Approach Angle', 'Breakover Angle', 'Departure Angle', 'Locking Differential', 'Skid Plates', 'Lift Kit', 'Overlanding'],
+                style: 'Rugged, confident, speaks to adventure seekers who push vehicles to limits. Balance technical specs with lifestyle aspirations.',
+                expertise: 'Reference SAE standards, IP ratings for off-road use, load ratings, recovery safety protocols, 4WD system types.'
+            }
+        };
+
+        // ============================================
+        // Default System Prompts with Category Intelligence
         // ============================================
         const DEFAULT_PROMPTS = {
             base: `You are an elite AI Optimization (AIO) specialist and enterprise SEO copywriter with deep expertise in Amazon A10, Shopify AIO, and Etsy search algorithms. You create content that ranks #1 and converts visitors into buyers.
@@ -781,19 +814,22 @@
 - LSI keywords: Semantic variations in H2/H3 headings
 - Place high-value keywords in: H1, first 100 words, H2 headings, conclusion
 
-### 3. EXPERT AUTHORITY SIGNALS
-- Reference industry standards (ASTM, ISO, IPX ratings)
-- Cite market research with specific statistics
-- Use technical terminology appropriate to the vertical
-- Include comparison data with percentages
+### 3. CATEGORY-SPECIFIC VOICE & TERMINOLOGY
+{{CATEGORY_VOICE}}
 
-### 4. CONVERSION OPTIMIZATION:
+### 4. EXPERT AUTHORITY SIGNALS
+- Reference industry standards and certifications
+- Cite specific technical specifications with data
+- Use category-appropriate terminology
+- Include comparison metrics with percentages
+
+### 5. CONVERSION OPTIMIZATION:
 - Address objections in bullet points
 - Use specific numbers ("saves 40% time")
 - Include social proof placeholders
 - Risk reversal (warranty, guarantee)
 
-### 5. OUTPUT FORMAT:
+### 6. OUTPUT FORMAT:
 - Pure Markdown
 - Proper heading hierarchy
 - Tables for specs/comparisons
@@ -1120,9 +1156,15 @@
             }, 100);
 
             try {
-                // Build system prompt based on platform
+                // Build category-specific voice injection
+                const categoryVoice = category && CATEGORY_VOICES[category] 
+                    ? `## CATEGORY VOICE: ${category.toUpperCase()}\n\n**Tone:** ${CATEGORY_VOICES[category].tone}\n\n**Key Vocabulary:** ${CATEGORY_VOICES[category].vocabulary.join(', ')}\n\n**Writing Style:** ${CATEGORY_VOICES[category].style}\n\n**Expertise Markers:** ${CATEGORY_VOICES[category].expertise}`
+                    : '';
+
+                // Build system prompt based on platform and category
                 const platformPrompt = config.prompts[platform] || '';
-                const systemPrompt = `${config.prompts.base}\n\n${platformPrompt}`;
+                let systemPrompt = config.prompts.base.replace('{{CATEGORY_VOICE}}', categoryVoice);
+                systemPrompt += '\n\n' + platformPrompt;
                 
                 const userPrompt = buildPrompt(platform, keyword, keKeywords, sellingPoints, audience, category, length);
 
@@ -1223,14 +1265,11 @@
             };
             
             const categoryNames = {
-                'home-decor': 'Home Decor & Patio Furniture',
+                'eco-home': 'Eco-Friendly Home Tech',
+                'sustainable': 'Sustainable Lifestyle',
                 'camping-outdoor': 'Camping & Outdoor Gear',
-                'kitchen-dining': 'Kitchen & Dining',
-                'bedding-bath': 'Bedding & Bath',
-                'electronics': 'Electronics & Gadgets',
-                'fashion-accessories': 'Fashion & Accessories',
-                'sports-fitness': 'Sports & Fitness',
-                'pet-supplies': 'Pet Supplies'
+                'solar-power': 'Solar Power System',
+                'automotive': 'Automotive & Off-Road'
             };
 
             let prompt = `Generate ${platformNames[platform]} for primary keyword: "${keyword}"
