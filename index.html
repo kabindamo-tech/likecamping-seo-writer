@@ -34,18 +34,6 @@
         .modal-content { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.1); }
         .fade-in { animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .typing-indicator { display: inline-flex; gap: 4px; }
-        .typing-indicator span { width: 8px; height: 8px; background: white; border-radius: 50%; animation: typingBounce 1.4s infinite ease-in-out; }
-        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
-        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-        @keyframes typingBounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
-        .locked-overlay { position: absolute; inset: 0; background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 10; }
-        .settings-section.locked .locked-overlay { display: flex; }
-        .settings-section.unlocked .locked-overlay { display: none; }
-        .tab-btn { border-bottom: 2px solid transparent; }
-        .tab-btn.active { color: #818cf8; border-bottom-color: #818cf8; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -101,6 +89,8 @@
                         <option value="eco-home">Eco-Friendly Home Tech</option>
                         <option value="sustainable">Sustainable Lifestyle</option>
                         <option value="camping-outdoor">Camping & Outdoor Gear</option>
+                        <option value="solar-power">Solar Power System</option>
+                        <option value="automotive">Automotive & Off-Road</option>
                     </select>
                 </div>
                 <div>
@@ -162,7 +152,7 @@
     </div>
 
     <div id="pricingModal" class="modal fixed inset-0 z-[100] hidden items-center justify-center p-4">
-        <div class="modal-content rounded-2xl p-8 max-w-md w-full shadow-2xl relative">
+        <div class="modal-content rounded-2xl p-8 max-md w-full shadow-2xl relative">
             <button id="closePricing" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
             <div class="text-center mb-6">
                 <h2 class="text-2xl font-bold text-white mb-2">Out of Credits</h2>
@@ -246,7 +236,7 @@
             provider: 'groq',
             model: 'llama-3.3-70b-versatile',
             apiKey: localStorage.getItem('ai_api_key') || '',
-            credits: 5, // Initial free credits
+            credits: 5,
             prompts: {
                 base: localStorage.getItem('prompt_base') || DEFAULT_PROMPTS.base,
                 amazon: localStorage.getItem('prompt_amazon') || DEFAULT_PROMPTS.amazon,
@@ -292,9 +282,6 @@
             setTimeout(() => toast.classList.add('translate-x-full'), 3000);
         }
 
-        // ==========================================
-        // Commercial Logic (Login & Purchasing)
-        // ==========================================
         loginBtn.addEventListener('click', () => {
             loginBtn.innerHTML = 'damo_ceo@gmail.com';
             creditBadge.classList.remove('hidden');
@@ -317,9 +304,6 @@
             pricingModal.classList.remove('flex');
         });
 
-        // ==========================================
-        // The Buttons Logic
-        // ==========================================
         copyBtn.addEventListener('click', () => {
             if(!sourceEditor.value) return showToast('No content to copy!');
             navigator.clipboard.writeText(sourceEditor.value)
@@ -339,14 +323,10 @@
             generateBtn.click();
         });
 
-        // ==========================================
-        // Generate Content Logic
-        // ==========================================
         generateBtn.addEventListener('click', async () => {
             const keyword = keywordInput.value.trim();
             if (!keyword) return showToast('Enter keyword first!');
 
-            // 🚀 Credit Check Logic 🚀
             if (config.credits <= 0) {
                 pricingModal.classList.remove('hidden');
                 pricingModal.classList.add('flex');
@@ -384,7 +364,6 @@
                 }
 
                 const data = await response.json();
-                
                 let content = '';
                 if (data.choices && data.choices[0] && data.choices[0].message) {
                     content = data.choices[0].message.content;
@@ -392,7 +371,6 @@
                     content = data.content || data.text || data.result || "【解析失败】\n" + JSON.stringify(data);
                 }
 
-                // 🚀 Deduct Credit on Success 🚀
                 config.credits -= 1;
                 userCredits.innerText = config.credits;
 
