@@ -361,7 +361,6 @@
 </head>
 <body class="p-4 md:p-8">
     <div class="max-w-7xl mx-auto">
-        <!-- Header -->
         <header class="flex items-center justify-between mb-10">
             <div class="flex items-center space-x-4">
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
@@ -376,7 +375,6 @@
             </div>
         </header>
 
-        <!-- Hero Section -->
         <div class="text-center mb-10">
             <h2 class="text-4xl md:text-5xl font-extrabold mb-4">
                 <span class="gradient-text">AI-Powered Content</span> for Global Commerce
@@ -392,9 +390,7 @@
             </div>
         </div>
 
-        <!-- Main Input Panel -->
         <div class="glass-panel rounded-2xl p-8 mb-8">
-            <!-- Platform Target -->
             <div class="mb-6">
                 <label class="block text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">
                     Platform Target
@@ -406,7 +402,6 @@
                 </select>
             </div>
 
-            <!-- Primary Keyword -->
             <div class="mb-6">
                 <label class="block text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">
                     Primary Keyword
@@ -420,7 +415,6 @@
                 <p class="text-sm text-slate-500 mt-2">Enter your main target keyword for SEO optimization.</p>
             </div>
 
-            <!-- KE Long-tail Keywords -->
             <div class="mb-6">
                 <label class="block text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">
                     KE Long-tail Keywords (Optional)
@@ -433,9 +427,7 @@
                 <p class="text-sm text-slate-500 mt-2">AI will strategically distribute these throughout the content for maximum SEO weight.</p>
             </div>
 
-            <!-- Two Column Layout -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <!-- Product Category -->
                 <div>
                     <label class="block text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">
                         Product Category
@@ -450,7 +442,6 @@
                     </select>
                 </div>
 
-                <!-- Target Audience -->
                 <div>
                     <label class="block text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">
                         Target Audience
@@ -464,7 +455,6 @@
                 </div>
             </div>
 
-            <!-- Key Selling Points -->
             <div class="mb-8">
                 <label class="block text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">
                     Key Selling Points (One per line)
@@ -477,7 +467,6 @@
                 <p class="text-sm text-slate-500 mt-2">AI will weave these features into benefit-driven copy.</p>
             </div>
 
-            <!-- Content Length -->
             <div class="mb-8">
                 <label class="block text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">
                     Content Length
@@ -489,7 +478,6 @@
                 </select>
             </div>
 
-            <!-- Generate Button -->
             <button id="generateBtn" class="generate-btn w-full text-white font-bold py-5 rounded-xl shadow-xl flex items-center justify-center space-x-3 text-lg">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
@@ -498,7 +486,6 @@
             </button>
         </div>
 
-        <!-- Output Section -->
         <div id="outputSection" class="hidden">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-xl font-bold text-white">Generated Output</h3>
@@ -509,7 +496,6 @@
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Source Panel -->
                 <div class="glass-panel rounded-2xl overflow-hidden">
                     <div class="bg-slate-800/50 px-5 py-4 border-b border-slate-700 flex items-center justify-between">
                         <div class="flex items-center space-x-2">
@@ -527,7 +513,6 @@
                     ></textarea>
                 </div>
 
-                <!-- Preview Panel -->
                 <div class="glass-panel rounded-2xl overflow-hidden">
                     <div class="bg-slate-800/50 px-5 py-4 border-b border-slate-700 flex items-center justify-between">
                         <div class="flex items-center space-x-2">
@@ -547,7 +532,6 @@
                 </div>
             </div>
 
-            <!-- Action Buttons -->
             <div class="flex flex-col sm:flex-row gap-4 mt-6">
                 <button id="copyBtn" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 border border-slate-700">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -570,14 +554,12 @@
             </div>
         </div>
 
-        <!-- Footer -->
         <footer class="text-center mt-16 text-slate-500 text-sm">
             <p class="font-medium">Global AI SEO Forge · Enterprise Content Solutions</p>
             <p class="mt-2 opacity-70">Optimized for Amazon A10, Shopify AIO, and Etsy Search</p>
         </footer>
     </div>
 
-    <!-- Admin Settings Modal -->
     <div id="settingsModal" class="modal fixed inset-0 z-50 hidden items-center justify-center p-4">
         <div class="modal-content rounded-2xl p-8 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between mb-6">
@@ -599,7 +581,6 @@
                 </button>
             </div>
             
-            <!-- Master Password Section -->
             <div id="passwordSection" class="mb-6">
                 <label class="block text-sm font-medium text-slate-300 mb-2">Authentication Required</label>
                 <div class="flex space-x-3">
@@ -616,9 +597,7 @@
                 <p id="passwordError" class="text-xs text-red-400 mt-2 hidden">Access denied. Invalid credentials.</p>
             </div>
             
-            <!-- Settings Container (Locked by default) -->
             <div id="settingsContainer" class="settings-section locked">
-                <!-- Locked Overlay -->
                 <div class="locked-overlay">
                     <div class="text-center">
                         <svg class="w-12 h-12 text-slate-500 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -628,15 +607,12 @@
                     </div>
                 </div>
                 
-                <!-- Tabs -->
                 <div class="flex border-b border-slate-700 mb-6">
                     <button class="tab-btn active px-4 py-3 text-sm font-medium text-slate-300" data-tab="api">API Settings</button>
                     <button class="tab-btn px-4 py-3 text-sm font-medium text-slate-400" data-tab="prompts">System Prompts</button>
                 </div>
                 
-                <!-- API Settings Tab -->
                 <div id="apiTab" class="tab-content active space-y-4">
-                    <!-- API Provider -->
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-2">API Provider</label>
                         <select id="providerSelect" class="platform-select w-full px-4 py-3 rounded-lg text-sm">
@@ -646,7 +622,6 @@
                         </select>
                     </div>
                     
-                    <!-- Model Selection -->
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-2">Model</label>
                         <select id="modelSelect" class="platform-select w-full px-4 py-3 rounded-lg text-sm">
@@ -656,7 +631,6 @@
                         </select>
                     </div>
                     
-                    <!-- API Key -->
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-2">API Key</label>
                         <input 
@@ -669,7 +643,6 @@
                     </div>
                 </div>
                 
-                <!-- System Prompts Tab -->
                 <div id="promptsTab" class="tab-content space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-2">Amazon A10 System Prompt</label>
@@ -715,7 +688,6 @@
         </div>
     </div>
 
-    <!-- Toast Notification -->
     <div id="toast" class="fixed top-6 right-6 transform translate-x-full transition-transform duration-300 z-50">
         <div class="bg-slate-900 border border-slate-700 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3">
             <svg id="toastIcon" class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -794,9 +766,6 @@
             }
         };
 
-        // ============================================
-        // Default System Prompts with Category Intelligence
-        // ============================================
         const DEFAULT_PROMPTS = {
             base: `You are an elite AI Optimization (AIO) specialist and enterprise SEO copywriter with deep expertise in Amazon A10, Shopify AIO, and Etsy search algorithms. You create content that ranks #1 and converts visitors into buyers.
 
@@ -868,9 +837,6 @@
 - Customization: Options available`
         };
 
-        // ============================================
-        // Load Configuration from localStorage
-        // ============================================
         let config = {
             provider: localStorage.getItem('ai_provider') || 'groq',
             model: localStorage.getItem('ai_model') || 'llama-3.1-70b-versatile',
@@ -883,9 +849,6 @@
             }
         };
 
-        // ============================================
-        // DOM Elements
-        // ============================================
         const keywordInput = document.getElementById('keywordInput');
         const keKeywordsInput = document.getElementById('keKeywordsInput');
         const sellingPointsInput = document.getElementById('sellingPointsInput');
@@ -900,8 +863,6 @@
         const copyBtn = document.getElementById('copyBtn');
         const copyHtmlBtn = document.getElementById('copyHtmlBtn');
         const regenerateBtn = document.getElementById('regenerateBtn');
-        
-        // Admin Modal
         const settingsModal = document.getElementById('settingsModal');
         const closeModal = document.getElementById('closeModal');
         const providerSelect = document.getElementById('providerSelect');
@@ -913,31 +874,19 @@
         const passwordSection = document.getElementById('passwordSection');
         const settingsContainer = document.getElementById('settingsContainer');
         const passwordError = document.getElementById('passwordError');
-        
-        // Prompt inputs
         const amazonPromptInput = document.getElementById('amazonPromptInput');
         const shopifyPromptInput = document.getElementById('shopifyPromptInput');
         const etsyPromptInput = document.getElementById('etsyPromptInput');
         const basePromptInput = document.getElementById('basePromptInput');
-        
-        // Tabs
         const tabBtns = document.querySelectorAll('.tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');
-        
-        // Toast
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toastMessage');
 
-        // ============================================
-        // State
-        // ============================================
         let isGenerating = false;
         let abortController = null;
         let isUnlocked = false;
 
-        // ============================================
-        // Initialize
-        // ============================================
         function updateModelOptions(provider) {
             const models = PROVIDER_CONFIG[provider].models;
             modelSelect.innerHTML = models.map(m => 
@@ -945,7 +894,6 @@
             ).join('');
         }
 
-        // Initialize settings
         providerSelect.value = config.provider;
         updateModelOptions(config.provider);
         apiKeyInput.value = config.apiKey;
@@ -954,19 +902,14 @@
         etsyPromptInput.value = config.prompts.etsy;
         basePromptInput.value = config.prompts.base;
 
-        // Provider change handler
         providerSelect.addEventListener('change', () => {
             updateModelOptions(providerSelect.value);
             modelSelect.selectedIndex = 0;
         });
 
-        // ============================================
-        // Tab Switching
-        // ============================================
         tabBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const tab = btn.dataset.tab;
-                
                 tabBtns.forEach(b => {
                     b.classList.remove('active');
                     b.classList.add('text-slate-400');
@@ -975,15 +918,11 @@
                 btn.classList.add('active');
                 btn.classList.remove('text-slate-400');
                 btn.classList.add('text-slate-300');
-                
                 tabContents.forEach(c => c.classList.remove('active'));
                 document.getElementById(tab + 'Tab').classList.add('active');
             });
         });
 
-        // ============================================
-        // Admin Access: Ctrl+Shift+A (Silent)
-        // ============================================
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.shiftKey && e.key === 'A') {
                 e.preventDefault();
@@ -996,7 +935,6 @@
             settingsModal.classList.add('flex');
             masterPasswordInput.value = '';
             passwordError.classList.add('hidden');
-            
             if (!isUnlocked) {
                 settingsContainer.classList.add('locked');
                 settingsContainer.classList.remove('unlocked');
@@ -1008,10 +946,8 @@
             }
         }
 
-        // Unlock Handler
         unlockBtn.addEventListener('click', () => {
-            const password = masterPasswordInput.value;
-            if (password === MASTER_PASSWORD) {
+            if (masterPasswordInput.value === MASTER_PASSWORD) {
                 isUnlocked = true;
                 settingsContainer.classList.remove('locked');
                 settingsContainer.classList.add('unlocked');
@@ -1025,26 +961,6 @@
             }
         });
 
-        masterPasswordInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                unlockBtn.click();
-            }
-        });
-
-        // Close Modal
-        closeModal.addEventListener('click', () => {
-            settingsModal.classList.add('hidden');
-            settingsModal.classList.remove('flex');
-        });
-
-        settingsModal.addEventListener('click', (e) => {
-            if (e.target === settingsModal) {
-                settingsModal.classList.add('hidden');
-                settingsModal.classList.remove('flex');
-            }
-        });
-
-        // Save Settings
         saveSettings.addEventListener('click', () => {
             config.provider = providerSelect.value;
             config.model = modelSelect.value;
@@ -1053,7 +969,6 @@
             config.prompts.shopify = shopifyPromptInput.value;
             config.prompts.etsy = etsyPromptInput.value;
             config.prompts.base = basePromptInput.value;
-            
             localStorage.setItem('ai_provider', config.provider);
             localStorage.setItem('ai_model', config.model);
             localStorage.setItem('ai_api_key', config.apiKey);
@@ -1061,20 +976,15 @@
             localStorage.setItem('prompt_shopify', config.prompts.shopify);
             localStorage.setItem('prompt_etsy', config.prompts.etsy);
             localStorage.setItem('prompt_base', config.prompts.base);
-            
             settingsModal.classList.add('hidden');
             settingsModal.classList.remove('flex');
             showToast('Configuration saved', 'success');
         });
 
-        // ============================================
-        // KE Keyword Density Calculator
-        // ============================================
         function calculateKEDensity(content, primaryKeyword, keKeywords) {
             const wordCount = content.split(/\s+/).length;
             const primaryCount = (content.match(new RegExp(primaryKeyword, 'gi')) || []).length;
             const primaryDensity = ((primaryCount / wordCount) * 100).toFixed(2);
-            
             let keResults = [];
             if (keKeywords) {
                 const keList = keKeywords.split(/\n|,/).map(k => k.trim()).filter(k => k);
@@ -1084,30 +994,23 @@
                     keResults.push({ keyword: ke, count, density });
                 });
             }
-            
-            return {
-                wordCount,
-                primary: { keyword: primaryKeyword, count: primaryCount, density: primaryDensity },
-                keKeywords: keResults
-            };
+            return { wordCount, primary: { keyword: primaryKeyword, count: primaryCount, density: primaryDensity }, keKeywords: keResults };
         }
 
-        // ============================================
-        // Generate Content - Cloud API Endpoint
-        // ============================================
         generateBtn.addEventListener('click', async () => {
             if (isGenerating) return;
-
             const keyword = keywordInput.value.trim();
             if (!keyword) {
                 showToast('Please enter a primary keyword', 'error');
                 keywordInput.focus();
                 return;
             }
-
             await startGeneration();
         });
 
+        // ============================================
+        // 🚀 startGeneration 核心逻辑重构 (v5.6 JSON稳定版)
+        // ============================================
         async function startGeneration() {
             isGenerating = true;
             abortController = new AbortController();
@@ -1120,65 +1023,36 @@
             const category = categorySelect.value;
             const length = lengthSelect.value;
             
-            // Update UI
+            // UI 加载状态
             generateBtn.disabled = true;
             generateBtn.innerHTML = `
                 <div class="typing-indicator">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span></span><span></span><span></span>
                 </div>
                 <span class="ml-3">Generating...</span>
             `;
-
-            // Show output section
             outputSection.classList.remove('hidden');
             outputSection.classList.add('fade-in');
-
-            // Clear previous content
             sourceEditor.value = '';
-            previewPanel.innerHTML = `
-                <div class="flex items-center justify-center h-full text-slate-400">
-                    <div class="text-center">
-                        <div class="typing-indicator mb-3">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                        <p class="font-medium">Crafting optimized content...</p>
-                    </div>
-                </div>
-            `;
+            previewPanel.innerHTML = '<div class="flex items-center justify-center h-full text-slate-400"><div class="text-center"><div class="typing-indicator mb-3"><span></span><span></span><span></span></div><p class="font-medium">Crafting optimized content...</p></div></div>';
 
-            // Scroll to output
-            setTimeout(() => {
-                outputSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 100);
+            setTimeout(() => outputSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
 
             try {
-                // Build category-specific voice injection
+                // 组装 Prompt
                 const categoryVoice = category && CATEGORY_VOICES[category] 
                     ? `## CATEGORY VOICE: ${category.toUpperCase()}\n\n**Tone:** ${CATEGORY_VOICES[category].tone}\n\n**Key Vocabulary:** ${CATEGORY_VOICES[category].vocabulary.join(', ')}\n\n**Writing Style:** ${CATEGORY_VOICES[category].style}\n\n**Expertise Markers:** ${CATEGORY_VOICES[category].expertise}`
                     : '';
-
-                // Build system prompt based on platform and category
                 const platformPrompt = config.prompts[platform] || '';
-                let systemPrompt = config.prompts.base.replace('{{CATEGORY_VOICE}}', categoryVoice);
-                systemPrompt += '\n\n' + platformPrompt;
-                
+                let systemPrompt = config.prompts.base.replace('{{CATEGORY_VOICE}}', categoryVoice) + '\n\n' + platformPrompt;
                 const userPrompt = buildPrompt(platform, keyword, keKeywords, sellingPoints, audience, category, length);
 
                 console.log('[API] Sending request to Worker...');
-                console.log('[API] Keyword:', keyword);
-                console.log('[API] Platform:', platform);
-                console.log('[API] Category:', category);
 
-                // Send to cloud endpoint
+                // 发起请求 - 禁用 Streaming，改用普通 JSON
                 const response = await fetch('https://damp-breeze-e25elikecamping-api-proxy.kabin7691.workers.dev', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         provider: config.provider,
                         model: config.model,
@@ -1187,88 +1061,49 @@
                         parameters: {
                             temperature: 0.7,
                             max_tokens: 4096,
-                            stream: true
+                            stream: false // 强制关闭流式，解决 length: 0 问题
                         }
                     }),
                     signal: abortController.signal
                 });
 
-                console.log('[API] Response status:', response.status);
-
                 if (!response.ok) {
                     const errorText = await response.text();
-                    console.error('[API] Error response:', errorText);
-                    throw new Error(`API request failed: ${response.status} - ${errorText}`);
+                    throw new Error(`API Failed: ${response.status} - ${errorText}`);
                 }
 
-                // Handle streaming response
-                const reader = response.body.getReader();
-                const decoder = new TextDecoder();
-                let fullContent = '';
-                let buffer = '';
+                // 一次性读取 JSON 结果
+                const data = await response.json();
+                console.log('FINAL DATA RECEIVED:', data);
 
-                console.log("[UI] Starting stream read...");
+                // 暴力解包：确保无论后端返回 content、text 还是 result 都能抓到
+// --- 上帝模式暴力解包开始 ---
+let content = '';
 
-                while (true) {
-                    const { done, value } = await reader.read();
-                    if (done) {
-                        console.log("[UI] Stream complete, final content length:", fullContent.length);
-                        break;
-                    }
+if (data.choices && data.choices[0] && data.choices[0].message) {
+    content = data.choices[0].message.content; // 兼容 Groq 原始 JSON 格式
+} else if (data.content) {
+    content = data.content; // 兼容咱们自定义的格式
+} else if (data.text) {
+    content = data.text;
+} else if (typeof data === 'string') {
+    content = data;
+} else {
+    // 💥 终极手段：如果都不认识，直接把后端发来的原始数据变成文字，贴在屏幕上！
+    content = "【系统调试信息 - 后端返回了未知格式】\n\n" + JSON.stringify(data, null, 2);
+}
 
-                    const chunk = decoder.decode(value, { stream: true });
-                    buffer += chunk;
-                    
-                    // Process complete SSE messages
-                    const lines = buffer.split('\n');
-                    buffer = lines.pop() || ''; // Keep incomplete line in buffer
+if (!content || content.trim() === '') {
+    throw new Error('云端返回了空数据，这通常是因为 API Key 欠费或写错了');
+}
+// --- 上帝模式暴力解包结束 ---
 
-                    for (const line of lines) {
-                        const trimmed = line.trim();
-                        if (trimmed === '' || trimmed === 'data: [DONE]') continue;
-                        if (!trimmed.startsWith('data: ')) continue;
+                // 强制 DOM 注入，确保 UI 显示
+                sourceEditor.value = content;
+                updatePreview(content);
 
-                        try {
-                            const jsonStr = trimmed.slice(6);
-                            const data = JSON.parse(jsonStr);
-                            
-                            // Support multiple response formats
-                            let content = '';
-                            if (data.choices?.[0]?.delta?.content) {
-                                content = data.choices[0].delta.content;
-                            } else if (data.choices?.[0]?.message?.content) {
-                                content = data.choices[0].message.content;
-                            } else if (data.content) {
-                                content = data.content;
-                            } else if (data.response) {
-                                content = data.response;
-                            }
-                            
-                            if (content && content.length > 0) {
-                                fullContent += content;
-                                
-                                // FORCE DOM UPDATE - Critical fix
-                                sourceEditor.value = fullContent;
-                                
-                                // Update preview
-                                updatePreview(fullContent);
-                            }
-                        } catch (e) {
-                            console.warn("[UI] Parse error:", e.message);
-                        }
-                    }
-                }
-                
-                // Final render check
-                console.log("[UI] Final content length:", fullContent.length);
-                console.log("[UI] First 200 chars:", fullContent.substring(0, 200));
-                
-                // Ensure final update
-                sourceEditor.value = fullContent;
-                updatePreview(fullContent);
-
-                // Calculate KE density
-                const density = calculateKEDensity(fullContent, keyword, keKeywords);
+                // 计算关键词密度
+                const density = calculateKEDensity(content, keyword, keKeywords);
                 console.log('KE Density Analysis:', density);
 
                 finishGeneration(true);
@@ -1279,80 +1114,26 @@
                 } else {
                     console.error('Generation error:', error);
                     showToast(`Error: ${error.message}`, 'error');
-                    previewPanel.innerHTML = `
-                        <div class="text-center text-red-500 py-20">
-                            <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            <p class="font-bold text-lg">Generation Failed</p>
-                            <p class="text-sm mt-2 opacity-80">${error.message}</p>
-                        </div>
-                    `;
+                    previewPanel.innerHTML = `<div class="text-center text-red-500 py-20"><svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><p class="font-bold text-lg">Generation Failed</p><p class="text-sm mt-2 opacity-80">${error.message}</p></div>`;
                 }
                 finishGeneration(false);
             }
         }
 
         function buildPrompt(platform, keyword, keKeywords, sellingPoints, audience, category, length) {
-            const platformNames = {
-                'amazon': 'Amazon Listing (A10 Algorithm)',
-                'shopify': 'Shopify Blog (AIO Focused)',
-                'etsy': 'Etsy Product (Emotional Branding)'
-            };
-            
-            const lengthNames = {
-                'concise': 'Concise (500-800 words)',
-                'standard': 'Standard (1000-1500 words)',
-                'comprehensive': 'Comprehensive (2000-3000 words)'
-            };
-            
-            const categoryNames = {
-                'eco-home': 'Eco-Friendly Home Tech',
-                'sustainable': 'Sustainable Lifestyle',
-                'camping-outdoor': 'Camping & Outdoor Gear',
-                'solar-power': 'Solar Power System',
-                'automotive': 'Automotive & Off-Road'
-            };
-
-            let prompt = `Generate ${platformNames[platform]} for primary keyword: "${keyword}"
-
-Content Specifications:
-- Platform: ${platformNames[platform]}
-- Length: ${lengthNames[length]}
-- Category: ${categoryNames[category] || 'General'}`;
-
-            if (audience) {
-                prompt += `\n- Target Audience: ${audience}`;
-            }
-
-            if (keKeywords) {
-                prompt += `\n\nKeywords Everywhere (KE) Long-tail Keywords to Integrate:\n${keKeywords}\n\nStrategically distribute these KE keywords throughout the content for optimal SEO weight. Primary keyword density: 1.5-2.5%. Long-tail keywords: 0.5-1% each.`;
-            }
-
-            if (sellingPoints) {
-                prompt += `\n\nKey Selling Points to Feature:\n${sellingPoints}\n\nTransform these features into benefit-driven copy.`;
-            }
-
-            prompt += `\n\nGenerate the complete optimized content now.`;
-
-            return prompt;
+            const platformNames = { 'amazon': 'Amazon Listing (A10 Algorithm)', 'shopify': 'Shopify Blog (AIO Focused)', 'etsy': 'Etsy Product (Emotional Branding)' };
+            const lengthNames = { 'concise': '500-800 words', 'standard': '1000-1500 words', 'comprehensive': '2000-3000 words' };
+            let prompt = `Generate ${platformNames[platform]} for primary keyword: "${keyword}"\n\nContent Specifications:\n- Length: ${lengthNames[length]}\n- Target Audience: ${audience || 'General'}`;
+            if (keKeywords) prompt += `\n\nKeywords Everywhere Integration:\n${keKeywords}`;
+            if (sellingPoints) prompt += `\n\nKey Selling Points:\n${sellingPoints}`;
+            return prompt + `\n\nGenerate the complete optimized content now.`;
         }
 
         function finishGeneration(success) {
             isGenerating = false;
-            abortController = null;
-            
             generateBtn.disabled = false;
-            generateBtn.innerHTML = `
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                </svg>
-                <span>Generate Optimized Content</span>
-            `;
-            
-            if (success) {
-                showToast('Content generated successfully', 'success');
-            }
+            generateBtn.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg><span>Generate Optimized Content</span>';
+            if (success) showToast('Content generated successfully', 'success');
         }
 
         function updatePreview(markdown) {
@@ -1363,98 +1144,29 @@ Content Specifications:
             previewPanel.innerHTML = marked.parse(markdown);
         }
 
-        // Real-time preview update when editing source
-        sourceEditor.addEventListener('input', () => {
-            updatePreview(sourceEditor.value);
-        });
+        sourceEditor.addEventListener('input', () => updatePreview(sourceEditor.value));
 
-        // ============================================
-        // Copy Functions
-        // ============================================
         copyBtn.addEventListener('click', () => {
-            const content = sourceEditor.value;
-            if (!content) {
-                showToast('No content to copy', 'error');
-                return;
-            }
-            
-            navigator.clipboard.writeText(content).then(() => {
-                showToast('Markdown copied to clipboard', 'success');
-            }).catch(() => {
-                showToast('Failed to copy', 'error');
-            });
+            navigator.clipboard.writeText(sourceEditor.value).then(() => showToast('Markdown copied', 'success'));
         });
 
         copyHtmlBtn.addEventListener('click', () => {
-            const markdown = sourceEditor.value;
-            if (!markdown) {
-                showToast('No content to copy', 'error');
-                return;
-            }
-            
-            const html = marked.parse(markdown);
-            navigator.clipboard.writeText(html).then(() => {
-                showToast('HTML copied to clipboard', 'success');
-            }).catch(() => {
-                showToast('Failed to copy', 'error');
-            });
+            const html = marked.parse(sourceEditor.value);
+            navigator.clipboard.writeText(html).then(() => showToast('HTML copied', 'success'));
         });
 
-        // Regenerate
         regenerateBtn.addEventListener('click', () => {
-            if (isGenerating && abortController) {
-                abortController.abort();
-            }
+            if (isGenerating && abortController) abortController.abort();
             startGeneration();
         });
 
-        // ============================================
-        // Toast Notification
-        // ============================================
         function showToast(message, type = 'success') {
             toastMessage.textContent = message;
             const icon = document.getElementById('toastIcon');
-            
-            if (type === 'error') {
-                icon.className = 'w-6 h-6 text-red-400';
-                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
-            } else if (type === 'info') {
-                icon.className = 'w-6 h-6 text-blue-400';
-                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
-            } else {
-                icon.className = 'w-6 h-6 text-green-400';
-                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>';
-            }
-            
+            icon.className = `w-6 h-6 ${type === 'error' ? 'text-red-400' : type === 'info' ? 'text-blue-400' : 'text-green-400'}`;
             toast.classList.remove('translate-x-full');
-            
-            setTimeout(() => {
-                toast.classList.add('translate-x-full');
-            }, 3000);
+            setTimeout(() => toast.classList.add('translate-x-full'), 3000);
         }
-
-        // ============================================
-        // Sync scroll between source and preview
-        // ============================================
-        let isSyncing = false;
-        
-        sourceEditor.addEventListener('scroll', () => {
-            if (!isSyncing) {
-                isSyncing = true;
-                const percentage = sourceEditor.scrollTop / (sourceEditor.scrollHeight - sourceEditor.clientHeight);
-                previewPanel.scrollTop = percentage * (previewPanel.scrollHeight - previewPanel.clientHeight);
-                setTimeout(() => isSyncing = false, 50);
-            }
-        });
-
-        previewPanel.addEventListener('scroll', () => {
-            if (!isSyncing) {
-                isSyncing = true;
-                const percentage = previewPanel.scrollTop / (previewPanel.scrollHeight - previewPanel.clientHeight);
-                sourceEditor.scrollTop = percentage * (sourceEditor.scrollHeight - sourceEditor.clientHeight);
-                setTimeout(() => isSyncing = false, 50);
-            }
-        });
     </script>
 </body>
 </html>
