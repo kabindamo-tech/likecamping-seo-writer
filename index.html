@@ -187,12 +187,16 @@
                     <button id="unlockBtn" class="unlock-btn px-6 py-3 rounded-lg text-white font-semibold">Unlock</button>
                 </div>
             </div>
-            <div id="settingsContainer" class="settings-section locked">
+            <div id="settingsContainer" class="settings-section locked hidden">
                 <div class="locked-overlay"><p class="text-slate-400">Locked</p></div>
                 <div id="apiTab" class="tab-content active space-y-4">
                     <div>
                         <label class="block text-sm text-slate-300 mb-2">API Provider</label>
-                        <select id="providerSelect" class="platform-select w-full px-4 py-3 rounded-lg"><option value="groq">Groq</option></select>
+                        <select id="providerSelect" class="platform-select w-full px-4 py-3 rounded-lg">
+                            <option value="groq">Groq</option>
+                            <option value="openai">OpenAI</option>
+                            <option value="minimax">Minimax</option>
+                        </select>
                     </div>
                     <div>
                         <label class="block text-sm text-slate-300 mb-2">Model</label>
@@ -215,12 +219,30 @@
     </div>
 
     <script>
+        // NEW: Clean, multi-provider config
         const PROVIDER_CONFIG = {
-            groq: {
+            groq: { 
+                label: 'Groq', 
                 models: [
                     { value: 'llama-3.3-70b-versatile', label: 'Llama 3.3 70B (Latest)' },
+                    { value: 'llama-3.1-8b-instant', label: 'Llama 3.1 8B' },
                     { value: 'mixtral-8x7b-32768', label: 'Mixtral 8x7B' },
                     { value: 'gemma2-9b-it', label: 'Gemma 2 9B' }
+                ]
+            },
+            openai: { 
+                label: 'OpenAI', 
+                models: [
+                    { value: 'gpt-4o', label: 'GPT-4o' },
+                    { value: 'gpt-4o-mini', label: 'GPT-4o-Mini' },
+                    { value: 'gpt-3.5-turbo', label: 'GPT-3.5 Turbo' }
+                ]
+            },
+            minimax: { 
+                label: 'Minimax', 
+                models: [
+                    { value: 'abab6.5s-chat', label: 'abab6.5s-chat' },
+                    { value: 'abab6.5-chat', label: 'abab6.5-chat' }
                 ]
             }
         };
@@ -249,22 +271,37 @@
 
         const [keywordInput, keKeywordsInput, sellingPointsInput, audienceInput, platformSelect, categorySelect, lengthSelect, generateBtn, outputSection, sourceEditor, previewPanel, settingsModal, closeModal, providerSelect, modelSelect, apiKeyInput, saveSettings, masterPasswordInput, unlockBtn, passwordSection, settingsContainer, toast, toastMessage, copyBtn, copyHtmlBtn, regenerateBtn, loginBtn, creditBadge, userCredits, pricingModal, closePricing, buyBtn] = ['keywordInput', 'keKeywordsInput', 'sellingPointsInput', 'audienceInput', 'platformSelect', 'categorySelect', 'lengthSelect', 'generateBtn', 'outputSection', 'sourceEditor', 'previewPanel', 'settingsModal', 'closeModal', 'providerSelect', 'modelSelect', 'apiKeyInput', 'saveSettings', 'masterPasswordInput', 'unlockBtn', 'passwordSection', 'settingsContainer', 'toast', 'toastMessage', 'copyBtn', 'copyHtmlBtn', 'regenerateBtn', 'loginBtn', 'creditBadge', 'userCredits', 'pricingModal', 'closePricing', 'buyBtn'].map(id => document.getElementById(id));
 
+        // NEW: Updated mapping logic to support multi-provider
         function updateModelOptions() {
-            modelSelect.innerHTML = PROVIDER_CONFIG.groq.models.map(m => 
+            const provider = providerSelect.value || config.provider || 'groq';
+            const models = PROVIDER_CONFIG[provider]?.models || [];
+            modelSelect.innerHTML = models.map(m => 
                 `<option value="${m.value}" ${m.value === config.model ? 'selected' : ''}>${m.label}</option>`
             ).join('');
         }
+        
         updateModelOptions();
         apiKeyInput.value = config.apiKey;
+
+        // NEW: Provider change listener
+        providerSelect.addEventListener('change', () => {
+            config.provider = providerSelect.value;
+            updateModelOptions();
+            config.model = modelSelect.value; // set default to first model of new provider
+        });
 
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.shiftKey && e.key === 'A') { e.preventDefault(); settingsModal.classList.remove('hidden'); settingsModal.classList.add('flex'); }
         });
 
+        // FIXED: Unlock logic totally hides setting pane until authenticated
         unlockBtn.addEventListener('click', () => {
             if (masterPasswordInput.value === MASTER_PASSWORD) {
-                settingsContainer.classList.remove('locked'); settingsContainer.classList.add('unlocked');
-                passwordSection.classList.add('hidden'); showToast('Access granted');
+                passwordSection.classList.add('hidden');
+                settingsContainer.classList.remove('hidden');
+                settingsContainer.classList.remove('locked');
+                settingsContainer.classList.add('unlocked');
+                showToast('Access granted');
             }
         });
 
